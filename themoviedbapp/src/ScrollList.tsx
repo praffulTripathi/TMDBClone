@@ -10,6 +10,9 @@ interface TopicData {
     filters: string[],
     bkgImage: string
 }
+interface APIResponse {
+    jsonResponse: object | null
+}
 function ScrollList({ topic }: Props) {
     const listData = {
         "trending": {
@@ -30,50 +33,57 @@ function ScrollList({ topic }: Props) {
     }
 
     const [currentActiveFilter, setActiveFilter] = useState(`${topic}-0`);
-    // const [apiHTML,setApiHTML]=useState('');
-    // const corsProxyUrl = 'https://cors-anywhere.herokuapp.com/';
+    const [apiResponse, setApiResponse] = useState<APIResponse>({ jsonResponse: null });
+    let apiToCall: string = "";
+    const options: object = {
+        method: 'GET',
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4MDU5NjQxMTY3MjI3YjA3ZDJhNWVkZjgzZDZlOTczMCIsInN1YiI6IjY0Nzk4YWIyY2FlZjJkMDBjMjk5NTljOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CjKZMhqaOHP6C63nj6MjSxBDDLnR6-dgrzo7CsWcL3U'
+        }
+    };
 
     function getKeyValue(object: any, key: string): any {
         return object[key];
     }
-    // const apiList = {
-    //     "trending-0": "https://www.themoviedb.org/remote/panel?panel=trending_scroller&group=today",
-    //     "trending-1": "https://www.themoviedb.org/remote/panel?panel=trending_scroller&group=this-week",
-    //     "popular-0": "https://www.themoviedb.org/remote/panel?panel=popular_scroller&group=streaming",
-    //     "popular-1": "https://www.themoviedb.org/remote/panel?panel=popular_scroller&group=on-tv",
-    //     "popular-2": "https://www.themoviedb.org/remote/panel?panel=popular_scroller&group=for-rent",
-    //     "popular-3": "https://www.themoviedb.org/remote/panel?panel=popular_scroller&group=in-theatres",
-    //     "freeToWatch-0": "https://www.themoviedb.org/remote/panel?panel=free_scroller&group=movie",
-    //     "freeToWatch-1": "https://www.themoviedb.org/remote/panel?panel=free_scroller&group=tv"
-
-    // }
-    // const fetchHTMLForFilter: Function = (async (apiToCall: string) => {
-    //     await fetch(corsProxyUrl+apiToCall)
-    //         .then(response => response.text())
-    //         .then(html => setApiHTML(html))
-    //         .catch(error => console.error(error));
-    // })
+    const apiList: Object = {
+        "trending-0": "https://api.themoviedb.org/3/trending/all/day",
+        "trending-1": "https://api.themoviedb.org/3/trending/all/week",
+        "popular-0": "https://api.themoviedb.org/3/trending/all/day",
+        "popular-1": "https://api.themoviedb.org/3/tv/popular",
+        "popular-2": "https://api.themoviedb.org/3/trending/all/day",
+        "popular-3": "https://api.themoviedb.org/3/trending/all/day",
+        "freeToWatch-0": "https://api.themoviedb.org/3/trending/all/day",
+        "freeToWatch-1": "https://api.themoviedb.org/3/trending/all/day"
+    }
 
     const topicData: TopicData = getKeyValue(listData, topic);
-    let styles: CSSProperties = { minHeight: '280px', backgroundPosition: 'bottom' };
+    let styles: CSSProperties = { minHeight: '280px', backgroundPosition: 'bottom', backgroundRepeat: 'no-repeat' };
     if (topicData.bkgImage !== "none")
         styles.backgroundImage = `url(${topicData.bkgImage})`
 
     const toggleFilterActive: Function = (event: SyntheticEvent, key: string, topic: string) => {
-        console.log(key);
         let elementToToggle: HTMLElement | null = document.getElementById(key);
         let currentActiveElement: HTMLElement | null = document.querySelector(`.${topic}.isActive`);
         currentActiveElement?.classList.remove('isActive');
         elementToToggle?.classList.add('isActive');
         setActiveFilter(key);
     }
+    const getAPIData = async (url: string, options: object) => {
+        await fetch(apiToCall, options)
+            .then(response => response.json())
+            .then(response => setApiResponse(response))
+            .catch(error => console.error(error));
+    }
+    useEffect(() => {
+        apiToCall = getKeyValue(apiList, `${topic}-0`);
+        getAPIData(apiToCall, options);
+    }, [])
 
-    // useEffect(() => {
-    //     const apiToCall: string = getKeyValue(apiList, currentActiveFilter);
-    //     console.log(apiToCall);
-    //     fetchHTMLForFilter(apiToCall);
-    // }, [currentActiveFilter])
-
+    useEffect(() => {
+        apiToCall = getKeyValue(apiList, currentActiveFilter);
+        getAPIData(apiToCall, options);
+    }, [currentActiveFilter])
 
     return (
         <div className="scrollList">
@@ -86,7 +96,7 @@ function ScrollList({ topic }: Props) {
                 </ul>
             </div>
             <div className="listCards" style={styles}>
-                {/* {apiHTML && <div dangerouslySetInnerHTML={{ __html: apiHTML }} />} */}
+                <Cards jsonResponse={apiResponse} topic={topic} />
             </div>
         </div>
     )

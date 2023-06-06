@@ -9,6 +9,7 @@ import './styles/header.css'
 import './styles/footer.css'
 import './styles/Body/body.css'
 import './styles/scrollList.css'
+import './styles/Body/cards.css'
 
 function App() {
   return (
