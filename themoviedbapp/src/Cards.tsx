@@ -5,6 +5,7 @@ import YourRatingSvg from './assets/yourRating.svg'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import ImageNotLoadedSVG from './assets/image-icon.svg'
 import CardNotLoaded from './CardNotLoaded'
+import { SyntheticEvent } from 'react'
 
 interface APIResponse {
     jsonResponse: object | null
@@ -37,17 +38,6 @@ function Cards({ jsonResponse, topic, isAwaitingAPIResponse }: Props): any {
         return Math.round(voteAverage);
     }
 
-    // const removeCardActions: Function = () => {
-    //     console.log("Add click event to document");
-    //     document.addEventListener('click', () => {
-    //         const anyBlurredCard: HTMLElement | null = document.querySelector('.blurCard');
-    //         anyBlurredCard?.classList.toggle('blurCard');
-    //         const anyCardMenuOn: HTMLElement | null = document.querySelector('.toggleDisplay');
-    //         anyCardMenuOn?.classList.toggle('toggleDisplay');
-    //         document.removeEventListener('click',()=>{console.log("Remove click event from Document")});
-    //     })
-    // }
-
     const blurCard = (cardKeyID: string, cardMenuKeyID: string) => {
         const anyBlurredCard: HTMLElement | null = document.querySelector('.blurCard');
         anyBlurredCard?.classList.toggle('blurCard');
@@ -57,7 +47,7 @@ function Cards({ jsonResponse, topic, isAwaitingAPIResponse }: Props): any {
         cardToBlur?.classList.toggle('blurCard');
         const cardMenuToDisplay: HTMLElement | null = document.getElementById(cardMenuKeyID);
         cardMenuToDisplay?.classList.toggle('toggleDisplay');
-        // removeCardActions();
+
     }
 
 
