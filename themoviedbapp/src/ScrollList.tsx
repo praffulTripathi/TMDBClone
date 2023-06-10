@@ -32,8 +32,9 @@ function ScrollList({ topic }: Props) {
         }
     }
 
-    const [currentActiveFilter, setActiveFilter] = useState(`${topic}-0`);
+    const [currentActiveFilter, setActiveFilter] = useState<string>(`${topic}-0`);
     const [apiResponse, setApiResponse] = useState<APIResponse>({ jsonResponse: null });
+    const [isAwaitingAPIResponse, setIsAwaitingAPIResponse] = useState<boolean>(false);
     let apiToCall: string = "";
     const options: object = {
         method: 'GET',
@@ -46,7 +47,7 @@ function ScrollList({ topic }: Props) {
     function getKeyValue(object: any, key: string): any {
         return object[key];
     }
-    const apiList: Object =  {
+    const apiList: Object = {
         "trending-0": "https://api.themoviedb.org/3/trending/all/day",
         "trending-1": "https://api.themoviedb.org/3/trending/all/week",
         "popular-0": "https://api.themoviedb.org/3/trending/all/day",
@@ -69,31 +70,15 @@ function ScrollList({ topic }: Props) {
         elementToToggle?.classList.add('isActive');
         setActiveFilter(key);
     }
-    // const loadingBar= document.getElementById('loading-bar') as HTMLDivElement;
-    // function showLoadingBar() {
-    //     loadingBar?.style.width = '0';
-    //     loadingBar.style.display = 'block';
-    //     setTimeout(() => {
-    //       loadingBar.style.width = '100%';
-    //     }, 0);
-    //   }
-
-    //   // Function to hide the loading bar
-    //   function hideLoadingBar() {
-    //     loadingBar.style.width = '0';
-    //     setTimeout(() => {
-    //       loadingBar.style.display = 'none';
-    //     }, 3000);
-    //   }
 
 
     const getAPIData = async (url: string, options: object) => {
-        // showLoadingBar();
+        setIsAwaitingAPIResponse(true);
         await fetch(apiToCall, options)
             .then(response => response.json())
             .then(response => {
                 setApiResponse(response);
-                // hideLoadingBar();
+                setIsAwaitingAPIResponse(false);
             })
             .catch(error => console.error(error));
     }
@@ -118,7 +103,7 @@ function ScrollList({ topic }: Props) {
                 </ul>
             </div>
             <div className="listCards" style={styles} aria-label={`filtered movie/tv shows for ${topic}`}>
-                <Cards jsonResponse={apiResponse} topic={topic} />
+                <Cards jsonResponse={apiResponse} topic={topic} isAwaitingAPIResponse={isAwaitingAPIResponse} />
             </div>
         </div>
     )

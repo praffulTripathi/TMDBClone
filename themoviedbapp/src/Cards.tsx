@@ -3,14 +3,15 @@ import FavoriteSvg from './assets/favorite.svg'
 import WatchlistSvg from './assets/watchlist.svg'
 import YourRatingSvg from './assets/yourRating.svg'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-
+import ImageNotLoadedSVG from './assets/image-icon.svg'
 
 interface APIResponse {
     jsonResponse: object | null
 }
 interface Props {
     jsonResponse: APIResponse,
-    topic: string
+    topic: string,
+    isAwaitingAPIResponse: boolean
 }
 interface CardDetails {
     title: string,
@@ -18,7 +19,7 @@ interface CardDetails {
     vote_average: number,
     poster_path: string
 }
-function Cards({ jsonResponse, topic }: Props): any {
+function Cards({ jsonResponse, topic, isAwaitingAPIResponse }: Props): any {
     function getKeyValue(object: any, key: string): any {
         return object[key];
     }
@@ -44,17 +45,33 @@ function Cards({ jsonResponse, topic }: Props): any {
         const cardMenuToDisplay: HTMLElement | null = document.getElementById(cardMenuKeyID);
         cardMenuToDisplay?.classList.toggle('toggleDisplay');
     }
-    if (jsonResponse.hasOwnProperty("jsonResponse")) {
+    if (isAwaitingAPIResponse || jsonResponse.hasOwnProperty("jsonResponse")) {
         return (
             <>
-                <div className="card contentNotLoaded"></div>
-                <div className="card contentNotLoaded"></div>
-                <div className="card contentNotLoaded"></div>
-                <div className="card contentNotLoaded"></div>
-                <div className="card contentNotLoaded"></div>
-                <div className="card contentNotLoaded"></div>
-                <div className="card contentNotLoaded"></div>
-                <div className="card contentNotLoaded"></div>
+                <div className="card contentNotLoaded">
+                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
+                </div>
+                <div className="card contentNotLoaded">
+                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
+                </div>
+                <div className="card contentNotLoaded">
+                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
+                </div>
+                <div className="card contentNotLoaded">
+                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
+                </div>
+                <div className="card contentNotLoaded">
+                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
+                </div>
+                <div className="card contentNotLoaded">
+                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
+                </div>
+                <div className="card contentNotLoaded">
+                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
+                </div>
+                <div className="card contentNotLoaded">
+                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
+                </div>
             </>
         )
     }
@@ -79,7 +96,7 @@ function Cards({ jsonResponse, topic }: Props): any {
                 return (
                     <div className="card" key={cardKeyID} id={cardKeyID} aria-label={`result for ${topic}`}>
                         <div className="poster">
-                            <LazyLoadImage className="cardPoster" src={card.poster_path} alt={card.title} loading='lazy'/>
+                            <LazyLoadImage className="cardPoster" src={card.poster_path} alt={card.title} loading='lazy' />
                             <div className="movieOptions" onClick={(event) => { blurCard(cardKeyID, cardMenuKeyID) }}>
                                 <div className="dot"></div>
                                 <div className="dot"></div>

@@ -9,3 +9,24 @@ body {
   box-sizing: border-box;
 }
 
+@keyframes blink-animation {
+  0% {
+      opacity: 0.3;
+  }
+
+  50% {
+      opacity: 1;
+  }
+
+  100% {
+      opacity: 0.3;
+  }
+}
+
+.fullScreenSuspense{
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(3, 37, 65);
+  transition: opacity 0.3s ease;
+  animation: blink-animation 1s infinite;
+}
