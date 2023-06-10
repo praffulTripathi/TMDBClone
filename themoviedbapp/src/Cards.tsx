@@ -2,7 +2,6 @@ import AddToListSvg from './assets/add-to-list.svg'
 import FavoriteSvg from './assets/favorite.svg'
 import WatchlistSvg from './assets/watchlist.svg'
 import YourRatingSvg from './assets/yourRating.svg'
-import CardNotLoaded from './CardNotLoaded'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 
@@ -48,14 +47,14 @@ function Cards({ jsonResponse, topic }: Props): any {
     if (jsonResponse.hasOwnProperty("jsonResponse")) {
         return (
             <>
-                {CardNotLoaded}
-                {CardNotLoaded}
-                {CardNotLoaded}
-                {CardNotLoaded}
-                {CardNotLoaded}
-                {CardNotLoaded}
-                {CardNotLoaded}
-                {CardNotLoaded}
+                <div className="card contentNotLoaded"></div>
+                <div className="card contentNotLoaded"></div>
+                <div className="card contentNotLoaded"></div>
+                <div className="card contentNotLoaded"></div>
+                <div className="card contentNotLoaded"></div>
+                <div className="card contentNotLoaded"></div>
+                <div className="card contentNotLoaded"></div>
+                <div className="card contentNotLoaded"></div>
             </>
         )
     }
@@ -80,8 +79,7 @@ function Cards({ jsonResponse, topic }: Props): any {
                 return (
                     <div className="card" key={cardKeyID} id={cardKeyID} aria-label={`result for ${topic}`}>
                         <div className="poster">
-                            {/* <LazyLoadImage className="cardPoster" src={card.poster_path} alt={card.title} loading='lazy' placeholderSrc='' /> */}
-                            <img className="cardPoster" src={card.poster_path} alt={card.title} loading='lazy'></img>
+                            <LazyLoadImage className="cardPoster" src={card.poster_path} alt={card.title} loading='lazy'/>
                             <div className="movieOptions" onClick={(event) => { blurCard(cardKeyID, cardMenuKeyID) }}>
                                 <div className="dot"></div>
                                 <div className="dot"></div>

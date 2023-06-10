@@ -144,7 +144,6 @@
 
 .poster {
     position: relative;
-    /* background-color: grey; */
     border-radius: 5px;
     height: 225px;
 }
@@ -184,6 +183,7 @@
     height: 225px;
     width: 150px;
     border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .movieTitle {
