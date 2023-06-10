@@ -46,7 +46,7 @@ function ScrollList({ topic }: Props) {
     function getKeyValue(object: any, key: string): any {
         return object[key];
     }
-    const apiList: Object = {
+    const apiList: Object =  {
         "trending-0": "https://api.themoviedb.org/3/trending/all/day",
         "trending-1": "https://api.themoviedb.org/3/trending/all/week",
         "popular-0": "https://api.themoviedb.org/3/trending/all/day",
@@ -69,10 +69,32 @@ function ScrollList({ topic }: Props) {
         elementToToggle?.classList.add('isActive');
         setActiveFilter(key);
     }
+    // const loadingBar= document.getElementById('loading-bar') as HTMLDivElement;
+    // function showLoadingBar() {
+    //     loadingBar?.style.width = '0';
+    //     loadingBar.style.display = 'block';
+    //     setTimeout(() => {
+    //       loadingBar.style.width = '100%';
+    //     }, 0);
+    //   }
+
+    //   // Function to hide the loading bar
+    //   function hideLoadingBar() {
+    //     loadingBar.style.width = '0';
+    //     setTimeout(() => {
+    //       loadingBar.style.display = 'none';
+    //     }, 3000);
+    //   }
+
+
     const getAPIData = async (url: string, options: object) => {
+        // showLoadingBar();
         await fetch(apiToCall, options)
             .then(response => response.json())
-            .then(response => setApiResponse(response))
+            .then(response => {
+                setApiResponse(response);
+                // hideLoadingBar();
+            })
             .catch(error => console.error(error));
     }
     useEffect(() => {
@@ -86,7 +108,7 @@ function ScrollList({ topic }: Props) {
     }, [currentActiveFilter])
 
     return (
-        <div className="scrollList">
+        <div className="scrollList" aria-label={`${topic} results`}>
             <div className="listTitleAndCategories">
                 <div className="listTitle">
                     {topicData.title}
@@ -95,7 +117,7 @@ function ScrollList({ topic }: Props) {
                     <ListFilters filters={topicData.filters} topic={topic} toggleFilterActive={toggleFilterActive} />
                 </ul>
             </div>
-            <div className="listCards" style={styles}>
+            <div className="listCards" style={styles} aria-label={`filtered movie/tv shows for ${topic}`}>
                 <Cards jsonResponse={apiResponse} topic={topic} />
             </div>
         </div>
