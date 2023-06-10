@@ -7,6 +7,7 @@
     position: relative;
 }
 
+
 .listCards::-webkit-scrollbar {
     height: 7px;
 }
@@ -32,6 +33,33 @@
     margin-bottom: 20px;
     position: relative;
     transition: opacity 0.3s ease;
+}
+
+@keyframes blink-animation {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.card.contentNotLoaded {
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: blink-animation 1s infinite;
+    border-radius: 5px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.contentNotLoadedImage{
+    width: 100px;
+    height: 100px;
 }
 
 .cardActionItemsDiv {
@@ -111,6 +139,8 @@
 
 .poster {
     position: relative;
+    border-radius: 5px;
+    height: 225px;
 }
 
 .movieOptions {
@@ -148,6 +178,7 @@
     height: 225px;
     width: 150px;
     border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .movieTitle {

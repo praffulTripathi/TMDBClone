@@ -32,8 +32,9 @@ function ScrollList({ topic }: Props) {
         }
     }
 
-    const [currentActiveFilter, setActiveFilter] = useState(`${topic}-0`);
+    const [currentActiveFilter, setActiveFilter] = useState<string>(`${topic}-0`);
     const [apiResponse, setApiResponse] = useState<APIResponse>({ jsonResponse: null });
+    const [isAwaitingAPIResponse, setIsAwaitingAPIResponse] = useState<boolean>(false);
     let apiToCall: string = "";
     const options: object = {
         method: 'GET',
@@ -69,10 +70,16 @@ function ScrollList({ topic }: Props) {
         elementToToggle?.classList.add('isActive');
         setActiveFilter(key);
     }
+
+
     const getAPIData = async (url: string, options: object) => {
+        setIsAwaitingAPIResponse(true);
         await fetch(apiToCall, options)
             .then(response => response.json())
-            .then(response => setApiResponse(response))
+            .then(response => {
+                setApiResponse(response);
+                setIsAwaitingAPIResponse(false);
+            })
             .catch(error => console.error(error));
     }
     useEffect(() => {
@@ -86,7 +93,7 @@ function ScrollList({ topic }: Props) {
     }, [currentActiveFilter])
 
     return (
-        <div className="scrollList">
+        <div className="scrollList" aria-label={`${topic} results`}>
             <div className="listTitleAndCategories">
                 <div className="listTitle">
                     {topicData.title}
@@ -95,8 +102,8 @@ function ScrollList({ topic }: Props) {
                     <ListFilters filters={topicData.filters} topic={topic} toggleFilterActive={toggleFilterActive} />
                 </ul>
             </div>
-            <div className="listCards" style={styles}>
-                <Cards jsonResponse={apiResponse} topic={topic} />
+            <div className="listCards" style={styles} aria-label={`filtered movie/tv shows for ${topic}`}>
+                <Cards jsonResponse={apiResponse} topic={topic} isAwaitingAPIResponse={isAwaitingAPIResponse} />
             </div>
         </div>
     )

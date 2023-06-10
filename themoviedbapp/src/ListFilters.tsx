@@ -11,12 +11,12 @@ function ListFilters({ filters, topic, toggleFilterActive }: Props) {
             return <li className={`scrollListFilter ${topic} isActive`} id={`${topic}-${index}`} key={`${topic}-${index}`}
                 onClick={(event) => {
                     toggleFilterActive(event, `${topic}-${index}`,topic);
-                }}>{filter}</li>
+                }} aria-label={`filter ${topic} by ${filter}`}>{filter}</li>
         else
             return <li className={`scrollListFilter ${topic}`} id={`${topic}-${index}`} key={`${topic}-${index}`}
                 onClick={(event) => {
                     toggleFilterActive(event, `${topic}-${index}`,topic);
-                }}>{filter}</li>
+                }} aria-label={`filter ${topic} by ${filter}`}>{filter}</li>
     })
     return (
         <>

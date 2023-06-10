@@ -2,14 +2,16 @@ import AddToListSvg from './assets/add-to-list.svg'
 import FavoriteSvg from './assets/favorite.svg'
 import WatchlistSvg from './assets/watchlist.svg'
 import YourRatingSvg from './assets/yourRating.svg'
-
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import ImageNotLoadedSVG from './assets/image-icon.svg'
 
 interface APIResponse {
     jsonResponse: object | null
 }
 interface Props {
     jsonResponse: APIResponse,
-    topic: string
+    topic: string,
+    isAwaitingAPIResponse: boolean
 }
 interface CardDetails {
     title: string,
@@ -17,7 +19,7 @@ interface CardDetails {
     vote_average: number,
     poster_path: string
 }
-function Cards({ jsonResponse, topic }: Props): any {
+function Cards({ jsonResponse, topic, isAwaitingAPIResponse }: Props): any {
     function getKeyValue(object: any, key: string): any {
         return object[key];
     }
@@ -43,6 +45,36 @@ function Cards({ jsonResponse, topic }: Props): any {
         const cardMenuToDisplay: HTMLElement | null = document.getElementById(cardMenuKeyID);
         cardMenuToDisplay?.classList.toggle('toggleDisplay');
     }
+    if (isAwaitingAPIResponse || jsonResponse.hasOwnProperty("jsonResponse")) {
+        return (
+            <>
+                <div className="card contentNotLoaded">
+                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
+                </div>
+                <div className="card contentNotLoaded">
+                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
+                </div>
+                <div className="card contentNotLoaded">
+                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
+                </div>
+                <div className="card contentNotLoaded">
+                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
+                </div>
+                <div className="card contentNotLoaded">
+                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
+                </div>
+                <div className="card contentNotLoaded">
+                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
+                </div>
+                <div className="card contentNotLoaded">
+                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
+                </div>
+                <div className="card contentNotLoaded">
+                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
+                </div>
+            </>
+        )
+    }
     if (!jsonResponse.hasOwnProperty("jsonResponse")) {
         const results: Array<object> = getKeyValue(jsonResponse, "results");
         let cardsToDisplay: Array<CardDetails> = [];
@@ -62,49 +94,51 @@ function Cards({ jsonResponse, topic }: Props): any {
                 const cardKeyID: string = `${topic}-card-${index}`;
                 const cardMenuKeyID: string = `${topic}-menu-${index}`;
                 return (
-                    <div className="card" key={cardKeyID} id={cardKeyID}>
+                    <div className="card" key={cardKeyID} id={cardKeyID} aria-label={`result for ${topic}`}>
                         <div className="poster">
-                            <img className="cardPoster" src={card.poster_path}></img>
+                            <LazyLoadImage className="cardPoster" src={card.poster_path} alt={card.title} loading='lazy' />
                             <div className="movieOptions" onClick={(event) => { blurCard(cardKeyID, cardMenuKeyID) }}>
                                 <div className="dot"></div>
                                 <div className="dot"></div>
                                 <div className="dot"></div>
                             </div>
                         </div>
-                        <div className="movieTitle">
+                        <div className="movieTitle" aria-label="movie/show title">
                             {card.title}
                         </div>
-                        <div className="releaseDate">
+                        <div className="releaseDate" aria-label="movie/show - release date/first air date">
                             {card.release_date}
                         </div>
-                        <div className="voteAverage">
+                        <div className="voteAverage" aria-label="movie/show average user ratings">
+                            <div className="fillBorder">
+                            </div>
                             {card.vote_average}%
                         </div>
-                        <div className="cardActionItemsDiv" id={cardMenuKeyID}>
-                            <ul className="cardActionItems">
+                        <div className="cardActionItemsDiv" id={cardMenuKeyID} aria-label="action items for current movie/tv-show">
+                            <ul className="cardActionItems" aria-label="movie/tv-show action items">
                                 <li className="cardActionItem">
-                                    <img src={AddToListSvg} className="listIcon"></img>
+                                    <img src={AddToListSvg} className="listIcon" alt="Add To List"></img>
                                     <div className="itemDesc">
                                         Add to List
                                     </div>
                                 </li>
 
                                 <li className="cardActionItem">
-                                    <img src={FavoriteSvg} className="listIcon"></img>
+                                    <img src={FavoriteSvg} className="listIcon" alt="Add to Favorite"></img>
                                     <div className="itemDesc">
                                         Favorite
                                     </div>
                                 </li>
 
                                 <li className="cardActionItem">
-                                    <img src={WatchlistSvg} className="listIcon"></img>
+                                    <img src={WatchlistSvg} className="listIcon" alt="Add to Watchlist"></img>
                                     <div className="itemDesc">
                                         Watchlist
                                     </div>
                                 </li>
 
                                 <li className="cardActionItem" id={cardMenuKeyID}>
-                                    <img src={YourRatingSvg} className="listIcon"></img>
+                                    <img src={YourRatingSvg} className="listIcon" alt="Your Rating"></img>
                                     <div className="itemDesc">
                                         Your rating
                                     </div>

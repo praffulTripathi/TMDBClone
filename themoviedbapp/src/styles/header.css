@@ -1,23 +1,43 @@
-.header{
+.header {
     width: 100%;
     height: 64px;
     background-color: rgb(3, 37, 65);
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     color: #FFF;
 }
-.navbarWrapper{
+
+#loading-bar {
+    width: 100%;
+    height: 5px;
+    background-color: #ddd;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    transition: width 0.3s ease;
+    display:none;
+}
+
+.displayLoadingBar {
+    width: 0;
+    display: block;
+    width: 100%;
+}
+
+.navbarWrapper {
     max-width: 1300px;
     width: 100%;
     height: 100%;
-    display:flex;
+    display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
 }
-.navbar{
-    display:flex;
+
+.navbar {
+    display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
@@ -26,38 +46,55 @@
     max-width: 1300px;
     padding: 0 40px;
 }
-.otheractions{
-    display:flex;
+
+.navbarWithDropdowns {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbarDropdown {
+    display: none;
+}
+
+.otheractions {
+    display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     height: 100%;
 }
-.movieDBLogo{
+
+.movieDBLogo {
     width: 154px;
     height: 20px;
 }
-.navbar_menu_list, .otheractions_list{
+
+.navbar_menu_list,
+.otheractions_list {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items:center;
+    align-items: center;
     list-style-type: none;
     padding-left: 24px;
 }
-.navbar_menu_list_item, .otheractions_list_item{
+
+.navbar_menu_list_item,
+.otheractions_list_item {
     margin-right: 24px;
     font-weight: 600;
     line-height: 24px;
     cursor: pointer;
 }
-.plusIcon{
+
+.plusIcon {
     height: 24px;
     width: 24px;
     display: flex;
     justify-content: center;
 }
-.siteLanguage{
+
+.siteLanguage {
     width: 30px;
     display: flex;
     justify-content: center;
@@ -68,11 +105,13 @@
     -webkit-transition: background-color 0.5s;
     transition: background-color 0.5s;
 }
-.siteLanguage:hover{
+
+.siteLanguage:hover {
     background-color: #FFF;
     color: rgb(3, 37, 65);
 }
-.searchIcon{
+
+.searchIcon {
     display: flex;
     justify-content: center;
     align-items: center;
