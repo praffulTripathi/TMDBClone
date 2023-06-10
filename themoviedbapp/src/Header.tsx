@@ -2,6 +2,10 @@ import PlusIcon from './styles/icons/plus_icon.svg'
 
 
 function Header() {
+    const enableDropdown: Function = (listActionToToggle: string) => {
+        const dropdownListToToggle: HTMLElement | null = document.getElementById(`${listActionToToggle}-actions`);
+        dropdownListToToggle?.classList.toggle("displayActions")
+    }
     return (
         <div className="header">
             <div id="loading-bar"></div>
@@ -12,11 +16,11 @@ function Header() {
                     </a>
                     <div className="navbarMenu">
                         <ul className="navbar_menu_list" aria-label="navbar list">
-                            <li className="navbar_menu_list_item" aria-label="navbar list item">
+                            <li className="navbar_menu_list_item" id="navbar-movies" aria-label="navbar list item" onMouseOver={(event) => enableDropdown('navbar-movies')} onMouseOut={(event) => enableDropdown('navbar-movies')}>
                                 <div className="list_item_title">
                                     Movies
                                 </div>
-                                {/* <div className="list_item_dropdown_actions">
+                                <div className="list_item_dropdown_actions" id="navbar-movies-actions">
                                     <ul className="navbar_list_dropdown_actions">
                                         <li className="dropdown_action">
                                             Popular
@@ -31,11 +35,62 @@ function Header() {
                                             Top Rated
                                         </li>
                                     </ul>
-                                </div> */}
+                                </div>
                             </li>
-                            <li className="navbar_menu_list_item" aria-label="navbar list item">TV Shows</li>
-                            <li className="navbar_menu_list_item" aria-label="navbar list item">People</li>
-                            <li className="navbar_menu_list_item" aria-label="navbar list item">More</li>
+                            <li className="navbar_menu_list_item moreWidth" id="navbar-shows" aria-label="navbar list item" onMouseOver={(event) => enableDropdown('navbar-shows')} onMouseOut={(event) => enableDropdown('navbar-shows')}>
+                                <div className="list_item_title">
+                                    TV Shows
+                                </div>
+                                <div className="list_item_dropdown_actions" id="navbar-shows-actions">
+                                    <ul className="navbar_list_dropdown_actions">
+                                        <li className="dropdown_action">
+                                            Popular
+                                        </li>
+                                        <li className="dropdown_action">
+                                            Airing Today
+                                        </li>
+                                        <li className="dropdown_action">
+                                            On TV
+                                        </li>
+                                        <li className="dropdown_action">
+                                            Top Rated
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li className="navbar_menu_list_item" id="navbar-people" aria-label="navbar list item" onMouseOver={(event) => enableDropdown('navbar-people')} onMouseOut={(event) => enableDropdown('navbar-people')}>
+                                <div className="list_item_title">
+                                    People
+                                </div>
+                                <div className="list_item_dropdown_actions" id="navbar-people-actions">
+                                    <ul className="navbar_list_dropdown_actions">
+                                        <li className="dropdown_action">
+                                            Popular People
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li className="navbar_menu_list_item" id="navbar-more" aria-label="navbar list item" onMouseOver={(event) => enableDropdown('navbar-more')} onMouseOut={(event) => enableDropdown('navbar-more')}>
+                                <div className="list_item_title">
+                                    More
+                                </div>
+                                <div className="list_item_dropdown_actions" id="navbar-more-actions">
+                                    <ul className="navbar_list_dropdown_actions">
+                                        <li className="dropdown_action">
+                                            Discussions
+                                        </li>
+                                        <li className="dropdown_action">
+                                            Leaderboard
+                                        </li>
+                                        <li className="dropdown_action">
+                                            Support
+                                        </li>
+                                        <li className="dropdown_action">
+                                            API
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                 </div>

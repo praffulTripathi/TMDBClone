@@ -4,6 +4,7 @@ import WatchlistSvg from './assets/watchlist.svg'
 import YourRatingSvg from './assets/yourRating.svg'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import ImageNotLoadedSVG from './assets/image-icon.svg'
+import CardNotLoaded from './CardNotLoaded'
 
 interface APIResponse {
     jsonResponse: object | null
@@ -35,6 +36,18 @@ function Cards({ jsonResponse, topic, isAwaitingAPIResponse }: Props): any {
         voteAverage *= 10;
         return Math.round(voteAverage);
     }
+
+    // const removeCardActions: Function = () => {
+    //     console.log("Add click event to document");
+    //     document.addEventListener('click', () => {
+    //         const anyBlurredCard: HTMLElement | null = document.querySelector('.blurCard');
+    //         anyBlurredCard?.classList.toggle('blurCard');
+    //         const anyCardMenuOn: HTMLElement | null = document.querySelector('.toggleDisplay');
+    //         anyCardMenuOn?.classList.toggle('toggleDisplay');
+    //         document.removeEventListener('click',()=>{console.log("Remove click event from Document")});
+    //     })
+    // }
+
     const blurCard = (cardKeyID: string, cardMenuKeyID: string) => {
         const anyBlurredCard: HTMLElement | null = document.querySelector('.blurCard');
         anyBlurredCard?.classList.toggle('blurCard');
@@ -44,35 +57,13 @@ function Cards({ jsonResponse, topic, isAwaitingAPIResponse }: Props): any {
         cardToBlur?.classList.toggle('blurCard');
         const cardMenuToDisplay: HTMLElement | null = document.getElementById(cardMenuKeyID);
         cardMenuToDisplay?.classList.toggle('toggleDisplay');
+        // removeCardActions();
     }
+
+
     if (isAwaitingAPIResponse || jsonResponse.hasOwnProperty("jsonResponse")) {
         return (
-            <>
-                <div className="card contentNotLoaded">
-                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
-                </div>
-                <div className="card contentNotLoaded">
-                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
-                </div>
-                <div className="card contentNotLoaded">
-                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
-                </div>
-                <div className="card contentNotLoaded">
-                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
-                </div>
-                <div className="card contentNotLoaded">
-                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
-                </div>
-                <div className="card contentNotLoaded">
-                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
-                </div>
-                <div className="card contentNotLoaded">
-                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
-                </div>
-                <div className="card contentNotLoaded">
-                    <img src={ImageNotLoadedSVG} className="contentNotLoadedImage" alt="image not loaded yet"></img>
-                </div>
-            </>
+            <CardNotLoaded />
         )
     }
     if (!jsonResponse.hasOwnProperty("jsonResponse")) {
