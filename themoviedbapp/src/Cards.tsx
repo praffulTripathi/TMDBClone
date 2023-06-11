@@ -17,6 +17,7 @@ interface Props {
 }
 interface CardDetails {
     title: string,
+    id:number,
     release_date: string,
     vote_average: number,
     poster_path: string
@@ -63,6 +64,7 @@ function Cards({ jsonResponse, topic, isAwaitingAPIResponse }: Props): any {
             if (getKeyValue(result, "title") !== undefined || getKeyValue(result, "name")) {
                 let newCard: CardDetails = {
                     title: getKeyValue(result, "title") == undefined ? getKeyValue(result, "name") : getKeyValue(result, "title"),
+                    id: getKeyValue(result,"id"),
                     release_date: transformDateTime(result),
                     vote_average: formatAverageToPercentage(result),
                     poster_path: "https://www.themoviedb.org/t/p/w220_and_h330_face" + getKeyValue(result, "poster_path"),
@@ -75,7 +77,7 @@ function Cards({ jsonResponse, topic, isAwaitingAPIResponse }: Props): any {
                 const cardKeyID: string = `${topic}-card-${index}`;
                 const cardMenuKeyID: string = `${topic}-menu-${index}`;
                 return (
-                    <div className="card" key={cardKeyID} id={cardKeyID} aria-label={`result for ${topic}`}>
+                    <div className="card" key={cardKeyID} id={cardKeyID} aria-label={`result for ${topic}`} >
                         <div className="poster">
                             <LazyLoadImage className="cardPoster" src={card.poster_path} alt={card.title} loading='lazy' />
                             <div className="movieOptions" onClick={(event) => { blurCard(cardKeyID, cardMenuKeyID) }}>

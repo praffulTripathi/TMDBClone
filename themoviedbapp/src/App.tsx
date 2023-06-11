@@ -10,14 +10,29 @@ import './styles/footer.css'
 import './styles/Body/body.css'
 import './styles/scrollList.css'
 import './styles/Body/cards.css'
+import { BrowserRouter as Router, Route, redirect, Routes, createBrowserRouter } from 'react-router-dom';
+import LandingPage from './LandingPage';
+import MovieDetails from './MovieDetails/MovieDetails';
+
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <LandingPage />,
+  },
+  {
+    path:"/movie/:movieName",
+    element: <MovieDetails />
+  }
+]);
 
 function App() {
   return (
-    <>
-    <Header />
-    <Body />
-    <Footer />
-    </>
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/movie/:movieName" element={<MovieDetails />} />
+    </Routes>
+    
   );
 }
 

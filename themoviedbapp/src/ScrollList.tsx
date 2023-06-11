@@ -53,7 +53,7 @@ function ScrollList({ topic }: Props) {
         "popular-0": "https://api.themoviedb.org/3/trending/all/day",
         "popular-1": "https://api.themoviedb.org/3/tv/popular",
         "popular-2": "https://api.themoviedb.org/3/trending/all/day",
-        "popular-3": "https://api.themoviedb.org/3/trending/all/day",
+        "popular-3": "https://api.themoviedb.org/3/movie/now_playing",
         "freeToWatch-0": "https://api.themoviedb.org/3/trending/all/day",
         "freeToWatch-1": "https://api.themoviedb.org/3/trending/all/day"
     }
