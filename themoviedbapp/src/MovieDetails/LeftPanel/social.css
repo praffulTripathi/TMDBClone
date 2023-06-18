@@ -1,0 +1,41 @@
+.socialSection{
+    border-top: 1px solid #d7d7d7;
+    margin-left: -10px;
+}
+
+.socialMenu {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 70px;
+}
+
+.socialHeading {
+    margin-right: 50px;
+    font-size: 22.4px;
+    font-weight: 600;
+}
+
+.socialOptions {
+    margin-right: 24px;
+    font-size: 17.6px;
+    font-weight: 600;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer
+}
+
+.socialOptionText {
+    padding-top: 26px;
+}
+
+.bottomPill {
+    margin-top: 5px;
+    width: 100%;
+}
+
+.isActive {
+    border: 2px solid black;
+}

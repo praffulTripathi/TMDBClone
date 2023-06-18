@@ -21,7 +21,7 @@ const router = createBrowserRouter([
     element: <LandingPage />,
   },
   {
-    path:"/movie/:movieName",
+    path:"/movie/:movieID" || "/tv/:tvID",
     element: <MovieDetails />
   }
 ]);
@@ -30,9 +30,9 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/movie/:movieName" element={<MovieDetails />} />
+      <Route path="/movie/:movieID" element={<MovieDetails />} />
+      <Route path="/tv/:tvID" element={<MovieDetails />} />
     </Routes>
-    
   );
 }
 

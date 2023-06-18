@@ -33,6 +33,7 @@
     margin-bottom: 20px;
     position: relative;
     transition: opacity 0.3s ease;
+    text-decoration: none;
 }
 
 @keyframes blink-animation {
@@ -60,7 +61,7 @@
 }
 
 .card.contentNotLoaded {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgb(219, 219, 211);
     animation: blink-animation 1s infinite;
     border-radius: 5px;
     display: flex;
@@ -197,7 +198,7 @@
     height: 225px;
     width: 150px;
     border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgb(219, 219, 211);
 }
 
 .movieTitle {
@@ -205,6 +206,7 @@
     font-weight: 700;
     margin-top: 24px;
     margin-left: 8px;
+    color: #000;
 }
 
 .releaseDate {

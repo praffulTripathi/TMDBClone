@@ -6,6 +6,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 import ImageNotLoadedSVG from './assets/image-icon.svg'
 import CardNotLoaded from './CardNotLoaded'
 import { SyntheticEvent } from 'react'
+import { BrowserRouter as Router, Route, useNavigate} from "react-router-dom";
 
 interface APIResponse {
     jsonResponse: object | null
@@ -17,7 +18,8 @@ interface Props {
 }
 interface CardDetails {
     title: string,
-    id:number,
+    id: number,
+    media_type:string,
     release_date: string,
     vote_average: number,
     poster_path: string
@@ -64,7 +66,8 @@ function Cards({ jsonResponse, topic, isAwaitingAPIResponse }: Props): any {
             if (getKeyValue(result, "title") !== undefined || getKeyValue(result, "name")) {
                 let newCard: CardDetails = {
                     title: getKeyValue(result, "title") == undefined ? getKeyValue(result, "name") : getKeyValue(result, "title"),
-                    id: getKeyValue(result,"id"),
+                    id: getKeyValue(result, "id"),
+                    media_type: getKeyValue(result,"media_type"),
                     release_date: transformDateTime(result),
                     vote_average: formatAverageToPercentage(result),
                     poster_path: "https://www.themoviedb.org/t/p/w220_and_h330_face" + getKeyValue(result, "poster_path"),
@@ -72,12 +75,18 @@ function Cards({ jsonResponse, topic, isAwaitingAPIResponse }: Props): any {
                 cardsToDisplay = [...cardsToDisplay, newCard];
             }
         });
+        const formatCardTitleToRoute:Function = (title:string) =>{
+            title = title.replace(/ /g, '-');
+            title = title.replace(/:/g,'');
+            return title;
+        }
+
         return (
             cardsToDisplay.map((card, index) => {
                 const cardKeyID: string = `${topic}-card-${index}`;
                 const cardMenuKeyID: string = `${topic}-menu-${index}`;
                 return (
-                    <div className="card" key={cardKeyID} id={cardKeyID} aria-label={`result for ${topic}`} >
+                    <a className="card" key={cardKeyID} id={cardKeyID} aria-label={`result for ${topic}`} href={`/${card.media_type}/${card.id}-${formatCardTitleToRoute(card.title)}`}>
                         <div className="poster">
                             <LazyLoadImage className="cardPoster" src={card.poster_path} alt={card.title} loading='lazy' />
                             <div className="movieOptions" onClick={(event) => { blurCard(cardKeyID, cardMenuKeyID) }}>
@@ -128,7 +137,7 @@ function Cards({ jsonResponse, topic, isAwaitingAPIResponse }: Props): any {
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    </a>
                 )
             })
 

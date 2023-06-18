@@ -1,0 +1,11 @@
+.mediaSection {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #d7d7d7;
+    margin-left: -10px;
+    padding: 30px 0;
+}
+
+.isMediaActive {
+    border: 2px solid black;
+}
