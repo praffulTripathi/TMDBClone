@@ -4,6 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import LandingPageSuspense from './LandingPageSuspense';
+import { BrowserRouter, createBrowserRouter } from 'react-router-dom';
+import "@fontsource/source-sans-pro";
+import "@fontsource/source-sans-pro/400.css";
+import "@fontsource/source-sans-pro/700.css";
+import "@fontsource/source-sans-pro/400-italic.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,9 +16,12 @@ const root = ReactDOM.createRoot(
 
 const LazyLoadApp = React.lazy(() => import('./App'));
 
+
 root.render(
-  <Suspense fallback={<LandingPageSuspense/>}>
-    <LazyLoadApp />
+  <Suspense fallback={<LandingPageSuspense />}>
+    <BrowserRouter>
+      <LazyLoadApp />
+    </BrowserRouter>
   </Suspense>
 );
 
