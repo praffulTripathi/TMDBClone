@@ -36,10 +36,10 @@ function LeftPanel({ titleCast, titleID }: Props) {
                 <div className="fullCastNCrew">Full Cast & Crew</div>
             </div>
             <section className="socialSection">
-                <Social />
+                <Social titleID={titleID}/>
             </section>
             <section className="mediaSection">
-                <Media />
+                <Media titleID={titleID}/>
             </section>
             <section className="recommendationsSection">
                 <Recommendations titleID={titleID} />

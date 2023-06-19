@@ -39,6 +39,11 @@ interface Props {
     releaseDateAndCertification: ReleaseDateNCertification
 }
 
+export const enableDropdown: Function = (listActionToToggle: string) => {
+    const dropdownListToToggle: HTMLElement | null = document.getElementById(`${listActionToToggle}-tooltip`);
+    dropdownListToToggle?.classList.toggle("displayActions")
+}
+
 function TitleOverview({ titleInfo, titleID, credits, releaseDateAndCertification }: Props) {
     let titleWrapperBkgImage: CSSProperties = {};
     titleWrapperBkgImage.backgroundImage = `url(${titleInfo.backdrop_path})`;
@@ -54,10 +59,6 @@ function TitleOverview({ titleInfo, titleID, credits, releaseDateAndCertificatio
         visiblePoster?.classList.toggle('isHidden');
         const hiddenBlurredDiv: HTMLElement | null = document.querySelector('.hiddenBlurredDiv');
         hiddenBlurredDiv?.classList.toggle('isBlurActive');
-    }
-    const enableDropdown: Function = (listActionToToggle: string) => {
-        const dropdownListToToggle: HTMLElement | null = document.getElementById(`${listActionToToggle}-tooltip`);
-        dropdownListToToggle?.classList.toggle("displayActions")
     }
     return (
         <div className="titleWrapper">

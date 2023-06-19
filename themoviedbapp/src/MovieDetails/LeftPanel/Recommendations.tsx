@@ -5,7 +5,7 @@ interface Recommendation {
     title: string,
     vote_average: string,
     poster_path: string,
-    release_date:string
+    release_date: string
 }
 interface Props {
     titleID: string
@@ -44,7 +44,7 @@ function Recommendations({ titleID }: Props) {
                             title: getKeyValue(recommendation, "title"),
                             vote_average: formatVoteAverage(getKeyValue(recommendation, "vote_average")),
                             poster_path: "https://www.themoviedb.org/t/p/w250_and_h141_face/" + getKeyValue(recommendation, "poster_path"),
-                            release_date: formatReleaseDate(getKeyValue(recommendation,"release_date"))
+                            release_date: formatReleaseDate(getKeyValue(recommendation, "release_date"))
                         }
                         return newRecommendation;
                     })
@@ -63,13 +63,18 @@ function Recommendations({ titleID }: Props) {
                 <div className="recommendations">
                     {
                         recommendations.map((recommendation: Recommendation, index: number) => {
-                            return <RecommendationCard recommendation={recommendation} index={index}  key={`recommendations-${index}`}/>
+                            return <RecommendationCard recommendation={recommendation} index={index} key={`recommendations-${index}`} />
                         })
                     }
                 </div>
             </>
         )
     }
-    else return (<span>We don't have enough data to suggest any movies based on The Flash. You can help by rating movies you've seen.</span>)
+    else return (
+        <>
+            <span className="sectionHeading">Recommendations</span>
+            <span>We don't have enough data to suggest any movies based on The Flash. You can help by rating movies you've seen.</span>
+        </>
+    )
 }
 export default Recommendations;

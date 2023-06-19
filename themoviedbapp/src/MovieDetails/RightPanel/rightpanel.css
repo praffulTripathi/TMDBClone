@@ -13,3 +13,35 @@
     flex-direction: column;
     margin-bottom: 20px;
 }
+.titleFacts{
+    padding-bottom: 30px;
+    border-bottom: 1px solid #d7d7d7;
+}
+.contentScoreSection{
+    margin-top: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #d7d7d7;
+}
+.contentScoreText{
+    font-size: 17.6px;
+    font-weight: 600;
+}
+.score{
+    width: 100%;
+    height: 38px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 12px;
+    background-color: rgb(32, 11, 11);
+    color: #FFF;
+    border-radius: 8px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+.looksGood{
+    font-size: 14.4px;
+}
+.contributors{
+    margin-top: 30px;
+}

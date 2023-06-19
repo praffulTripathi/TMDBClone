@@ -3,7 +3,7 @@ import OtherTitleDetails from "../OtherTitleDetails";
 import SocialMediaLinks from "./SocialMediaLinks";
 import './rightpanel.css'
 
-interface OtherDetails {
+export interface OtherDetails {
     status: string,
     revenue: number,
     budget: number,
@@ -25,8 +25,8 @@ function RightPanel({ otherTitleDetails, titleID }: Props) {
         const languageCodeToEnglish = new Intl.DisplayNames(['en'], { type: 'language' }).of(languageCode);
         return (
             <div className="rightPanel">
-                <div className="titleFacts">
-                    <SocialMediaLinks otherTitleDetails={otherTitleDetails} />
+                <section className="titleFacts">
+                    <SocialMediaLinks titleID={titleID} homepageLink={otherTitleDetails.homepage} />
                     <div className="titleStatus">
                         <div className="status">
                             <span><b>Status</b></span>
@@ -44,8 +44,19 @@ function RightPanel({ otherTitleDetails, titleID }: Props) {
                             <span>{formatDollars(otherTitleDetails?.revenue)}</span></div>
                     </div>
                     <Keywords titleID={titleID} />
-                </div>
-                <div className="contributors"></div>
+                </section>
+                <section className="contentScoreSection">
+                    <div className="contentScore">
+                        <span className="contentScoreText">Content Score</span>
+                        <div className="score">
+                            100
+                        </div>
+                        <span className="looksGood">Yes! Looking good!</span>
+                    </div>
+                </section>
+                <section className="contributors">
+                    
+                </section>
             </div>
         )
     }

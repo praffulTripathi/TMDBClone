@@ -4,6 +4,7 @@ import OtherTitleDetails from "./OtherTitleDetails";
 import LandingPageSuspense from "../LandingPageSuspense";
 import { Helmet } from "react-helmet";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
+import { getKeyValue } from "../helper";
 
 interface Props {
     titleID: string
@@ -53,10 +54,6 @@ function TitleDetails({ titleID }: Props) {
     const getTitleDetailsByID: string = `https://api.themoviedb.org/3/movie/${titleID}`;
     const getTitleCreditsByID: string = `https://api.themoviedb.org/3/movie/${titleID}/credits`;
     const releaseDateEndpointByID: string = `https://api.themoviedb.org/3/movie/${titleID}/release_dates`;
-    function getKeyValue(object: any, key: string): any {
-        if (object.hasOwnProperty(key))
-            return object[key];
-    }
     const setGenres: Function = (titleGenreIDs: Array<number>) => {
         const titleGenres: Array<string> = titleGenreIDs.map((genreID) => {
             return getKeyValue(genreID, "name");

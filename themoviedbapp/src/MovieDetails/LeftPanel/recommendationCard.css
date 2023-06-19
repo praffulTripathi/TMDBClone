@@ -48,17 +48,18 @@
 }
 
 .recommendationCardOptions {
-    position:absolute;
-    top:101px;
+    position: absolute;
+    top: 101px;
     height: 40px;
     width: 100%;
     background-color: #FFF;
-    display:none;
-    opacity:0.8;
+    display: none;
+    opacity: 0.8;
 }
-.optionsActive{
-    z-index:100;
-    display:flex;
+
+.optionsActive {
+    z-index: 100;
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -89,15 +90,17 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.releaseDateWithCalendarSVG{
-    padding-left:10px;
+
+.releaseDateWithCalendarSVG {
+    padding-left: 10px;
 }
-.optionSVGs{
-    padding-right:10px;
+
+.optionSVGs {
+    padding-right: 10px;
 }
-.recommendationOptionsSvg{
-    height:16px;
-    width:16px;
+
+.recommendationOptionsSvg {
+    height: 16px;
+    width: 16px;
     margin-right: 4px;
 }
-.recommendationVoteAverage {}

@@ -1,6 +1,11 @@
-.socialSection{
+.socialSection {
     border-top: 1px solid #d7d7d7;
     margin-left: -10px;
+    padding-bottom: 20px;
+}
+
+.social {
+    position: relative;
 }
 
 .socialMenu {
@@ -27,8 +32,20 @@
     cursor: pointer
 }
 
-.socialOptionText {
+.reviewsAndCount {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.socialOptionText,
+.countResults {
     padding-top: 26px;
+}
+
+.countResults {
+    margin-left: 4px;
+    opacity: 0.6;
 }
 
 .bottomPill {
