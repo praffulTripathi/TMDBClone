@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TitleOverview from "./TitleOverview";
 import OtherTitleDetails from "./OtherTitleDetails";
 import LandingPageSuspense from "../LandingPage/LandingPageSuspense";
 import { Helmet } from "react-helmet";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
-import { getKeyValue } from "../helper";
+import { getKeyValue, options } from "../helper";
+import { ThemeContext, TitleTypeProp } from "../AppContext";
 
 interface Props {
     titleID: string,
     videoPlayerStatus: Boolean
 }
 
-interface TitleDetails {
+export interface MovieDetails {
     original_title: string,
     poster_path: string,
     backdrop_path: string,
@@ -23,6 +24,26 @@ interface TitleDetails {
     vote_average: number,
     overview: string,
     original_language: string
+}
+
+export interface TVDetails{
+    original_name: string,
+    created_by: string,
+    poster_path: string,
+    backdrop_path: string,
+    first_air_date: string,
+    homepage:string,
+    in_production: boolean,
+    network_logo: string,
+    network_name: string,
+    number_of_episodes: number, 
+    number_of_seasons: number, 
+    tagline: string,
+    genres: Array<string>,
+    vote_average: number,
+    overview: string, 
+    status: string, 
+    type: string
 }
 interface Crew {
     name: string,
@@ -51,29 +72,23 @@ export interface StreamingProvider {
 }
 
 function TitleDetails({ titleID, videoPlayerStatus }: Props) {
-    const [titleInfo, setTitleInfo] = useState<TitleDetails | null>(null);
+    const { mediaType }: TitleTypeProp = useContext(ThemeContext);
+    const getProvidersByID: string = `https://api.themoviedb.org/3/${mediaType}/${titleID}/watch/providers`;
+    const getTitleDetailsByID: string = `https://api.themoviedb.org/3/${mediaType}/${titleID}`;
+    const getTitleCreditsByID: string = `https://api.themoviedb.org/3/${mediaType}/${titleID}/credits`;
+    const releaseDateEndpointByID: string = `https://api.themoviedb.org/3/${mediaType}/${titleID}/release_dates`;
+    const [titleInfo, setTitleInfo] = useState<MovieDetails | null>(null);
     const [titleCast, setTitleCast] = useState<Array<Cast>>([]);
     const [crewMembers, setCrewMembers] = useState<Array<Crew>>([]);
     const [otherTitleDetails, setOtherTitleDetails] = useState<OtherDetails | null>(null);
     const [releaseDateAndCertification, setReleaseDateAndCertification] = useState<ReleaseDateNCertification | null>(null);
     const [providers, setProvider] = useState<StreamingProvider>();
-    const getProvidersByID: string = `https://api.themoviedb.org/3/movie/${titleID}/watch/providers`;
-    const getTitleDetailsByID: string = `https://api.themoviedb.org/3/movie/${titleID}`;
-    const getTitleCreditsByID: string = `https://api.themoviedb.org/3/movie/${titleID}/credits`;
-    const releaseDateEndpointByID: string = `https://api.themoviedb.org/3/movie/${titleID}/release_dates`;
     const setGenres: Function = (titleGenreIDs: Array<number>) => {
         const titleGenres: Array<string> = titleGenreIDs.map((genreID) => {
             return getKeyValue(genreID, "name");
         })
         return titleGenres;
     }
-    const options: object = {
-        method: 'GET',
-        headers: {
-            accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4MDU5NjQxMTY3MjI3YjA3ZDJhNWVkZjgzZDZlOTczMCIsInN1YiI6IjY0Nzk4YWIyY2FlZjJkMDBjMjk5NTljOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.CjKZMhqaOHP6C63nj6MjSxBDDLnR6-dgrzo7CsWcL3U'
-        }
-    };
     const formatRuntime: Function = (runtime: number) => {
         return `${Math.floor(runtime / 60)}h ${runtime % 60}m`
     }
@@ -121,7 +136,6 @@ function TitleDetails({ titleID, videoPlayerStatus }: Props) {
             .then(response => response.json())
             .then(response => {
                 const results: Object = getKeyValue(response, "results");
-                console.log(results);
                 if (Object.keys(results).length !== 0) {
                     const indiaStreamingProviders = getKeyValue(results, "IN");
                     const justWatchLink = getKeyValue(indiaStreamingProviders, "link");
@@ -134,7 +148,7 @@ function TitleDetails({ titleID, videoPlayerStatus }: Props) {
             .catch(error => console.error(error));
     }
 
-    const getTitleDetailsAsync = async (url: string, options: object) => {
+    const getTitleDetailsAsync = async (url: string, options: object, mediaType:string) => {
         await fetch(url, options)
             .then(response => response.json())
             .then(response => {
@@ -161,6 +175,7 @@ function TitleDetails({ titleID, videoPlayerStatus }: Props) {
             })
             .catch(error => console.error(error));
     }
+
     const getCastDetailsAsync = async (url: string, options: object) => {
         await fetch(url, options)
             .then(response => response.json())
@@ -204,10 +219,18 @@ function TitleDetails({ titleID, videoPlayerStatus }: Props) {
             .catch(error => console.error(error));
     }
     useEffect(() => {
-        getTitleDetailsAsync(getTitleDetailsByID, options);
-        getCastDetailsAsync(getTitleCreditsByID, options);
-        getReleaseDateAndCertification(releaseDateEndpointByID, options);
-        getStreamingProviders(getProvidersByID, options);
+        if (mediaType === "movie") {
+            getTitleDetailsAsync(getTitleDetailsByID, options, mediaType);
+            getCastDetailsAsync(getTitleCreditsByID, options);
+            getReleaseDateAndCertification(releaseDateEndpointByID, options);
+            getStreamingProviders(getProvidersByID, options);
+        }
+        else if (mediaType === "tv") {
+            getTitleDetailsAsync(getTitleDetailsByID, options, mediaType);
+            getCastDetailsAsync(getTitleCreditsByID, options);
+            getReleaseDateAndCertification(releaseDateEndpointByID, options);
+            getStreamingProviders(getProvidersByID, options);
+        }
     }, [])
 
     const formatCardTitleToRoute: Function = (title: string) => {
@@ -225,7 +248,7 @@ function TitleDetails({ titleID, videoPlayerStatus }: Props) {
                 <TitleOverview titleInfo={titleInfo} titleID={titleID} credits={crewMembers} releaseDateAndCertification={releaseDateAndCertification} providers={providers} />
 
                 <section className="otherTitleDetails">
-                    <OtherTitleDetails titleCast={titleCast} titleID={titleID} otherTitleDetails={otherTitleDetails} videoPlayerStatus={videoPlayerStatus} providers={providers}/>
+                    <OtherTitleDetails titleCast={titleCast} titleID={titleID} otherTitleDetails={otherTitleDetails} videoPlayerStatus={videoPlayerStatus} providers={providers} />
                 </section>
             </div>
         )

@@ -4,9 +4,10 @@ import WatchlistSvg from '../assets/watchlist.svg'
 import YourRatingSvg from '../assets/yourRating.svg'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import CardNotLoaded from './CardNotLoaded'
-import { SyntheticEvent } from 'react'
+import { SyntheticEvent, useContext } from 'react'
 import { BrowserRouter as Router, Route, useNavigate } from "react-router-dom";
 import UserScore from '../UserScore'
+import { ThemeContext, TitleTypeProp } from '../AppContext'
 
 interface APIResponse {
     jsonResponse: object | null
@@ -25,6 +26,7 @@ interface CardDetails {
     poster_path: string
 }
 function Cards({ jsonResponse, topic, isAwaitingAPIResponse }: Props): any {
+    const {mediaType}: TitleTypeProp = useContext(ThemeContext);
     function getKeyValue(object: any, key: string): any {
         return object[key];
     }

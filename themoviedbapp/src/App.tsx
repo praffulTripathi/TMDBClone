@@ -8,18 +8,7 @@ import './styles/cards.css'
 import { BrowserRouter as Router, Route, redirect, Routes, createBrowserRouter } from 'react-router-dom';
 import LandingPage from './LandingPage/LandingPage';
 import MovieDetails from './MovieDetails/MovieDetails';
-
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <LandingPage />,
-  },
-  {
-    path:"/movie/:movieID" || "/tv/:tvID",
-    element: <MovieDetails />
-  }
-]);
+import MyProvider from './AppContext';
 
 function App() {
   return (

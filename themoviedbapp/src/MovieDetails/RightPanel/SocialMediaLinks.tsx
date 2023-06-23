@@ -41,7 +41,6 @@ function SocialMediaLinks({ titleID, homepageLink, providers }: Props) {
     useEffect(() => {
         getExternalLinks(externalLinksURL, options);
     }, [])
-    console.log(providers);
     return (
         <div className="socialMediaLinks">
             {

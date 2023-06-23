@@ -12,6 +12,10 @@ export interface VideoDetails {
   video_path: string
 }
 
+// interface Props {
+//   value
+// }
+
 function MovieDetails() {
   const routeURL: string = useLocation().pathname;
   const titleID = useRef<string>(routeURL.split('/')[2].split('-')[0]);
@@ -23,7 +27,7 @@ function MovieDetails() {
     <div className="movieDetails">
       <div className="bodyContents">
         <Header />
-        <TitleDetails titleID={titleID.current} videoPlayerStatus={videoPlayerStatus}/>
+        <TitleDetails titleID={titleID.current} videoPlayerStatus={videoPlayerStatus} />
         <Footer />
       </div>
       {
