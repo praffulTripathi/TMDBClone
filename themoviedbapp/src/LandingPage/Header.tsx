@@ -1,4 +1,4 @@
-import PlusIcon from './styles/icons/plus_icon.svg'
+import PlusIcon from '../assets/plus_icon.svg'
 
 
 function Header() {

@@ -41,9 +41,10 @@
     font-size: 24px;
     font-weight: 600;
     color: #000;
+    white-space:nowrap;
 }
 
-.filterList {
+.filterList, .dropdownFilterList {
     padding: 0;
     margin-left: 24px;
     display: flex;
@@ -54,6 +55,14 @@
     list-style-type: none;
     border: 1px solid rgb(3, 37, 65);
     border-radius: 32px;
+}
+
+.dropdownFilterList{
+    color: #FFF;
+}
+
+.popular-option{
+    
 }
 
 .scrollListFilter {
@@ -67,6 +76,7 @@
     -webkit-transition: background-color 1s;
     transition: background-color 1s;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .isActive {

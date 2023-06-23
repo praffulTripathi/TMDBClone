@@ -17,6 +17,7 @@
 .footerList{
     list-style-type: none;
     cursor: pointer;
+    white-space: nowrap;
 }
 .title{
     font-size: 20px;

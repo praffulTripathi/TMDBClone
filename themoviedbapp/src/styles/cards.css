@@ -165,7 +165,7 @@
 
 .movieOptions {
     position: absolute;
-    top: 8px;
+    top: 28px;
     right: 8px;
     z-index: 4;
     border-radius: 50%;
@@ -179,6 +179,7 @@
     background-color: #FFF;
     opacity: 0.6;
     cursor: pointer;
+    z-index: 1000;
 }
 
 .dot {
@@ -194,6 +195,11 @@
     opacity: 1;
 }
 
+.isOptionsActive {
+    background-color: rgb(1, 180, 228);
+    opacity: 1;
+}
+
 .cardPoster {
     height: 225px;
     width: 150px;
@@ -204,9 +210,17 @@
 .movieTitle {
     font-size: 16px;
     font-weight: 700;
-    margin-top: 24px;
+    margin-top: 30px;
     margin-left: 8px;
     color: #000;
+}
+
+.movieTitle:hover {
+    color: rgb(1, 180, 228);
+}
+
+.anchor {
+    text-decoration: none;
 }
 
 .releaseDate {
@@ -230,4 +244,69 @@
     font-size: 16px;
     font-weight: 700;
     border: 1px solid green;
+}
+
+.userScoreTitlePage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 60px;
+    height: 60px;
+    background-color: rgb(8, 28, 34);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease-in
+}
+
+.userScoreTitlePage:hover {
+    transform: scale(1.2);
+}
+
+.userScoreTitlePage>span {
+    font-size: 24px;
+}
+
+.userScore {
+    background-color: rgb(8, 28, 34);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.userScoreSvg {
+    transform: scale(0.95);
+}
+
+.bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.track {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.rotate {
+    transform: rotate(-90deg);
+}
+
+.displayRating {
+    background-color: rgb(8, 28, 34);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(-2px);
+}
+
+.percentage {
+    position: absolute;
+    font-size: 8px;
 }

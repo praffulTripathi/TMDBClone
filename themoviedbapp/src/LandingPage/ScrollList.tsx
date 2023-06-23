@@ -1,6 +1,7 @@
 import { CSSProperties, SyntheticEvent, useEffect, useState } from "react";
 import ListFilters from "./ListFilters";
 import Cards from "./Cards";
+import FilterOptions from "./FilterOptions";
 
 interface Props {
     topic: string
@@ -101,6 +102,9 @@ function ScrollList({ topic }: Props) {
                 <ul className="filterList">
                     <ListFilters filters={topicData.filters} topic={topic} toggleFilterActive={toggleFilterActive} />
                 </ul>
+                {/* <select className="dropdownFilterList">
+                    <FilterOptions filters={topicData.filters} topic={topic} toggleFilterActive={toggleFilterActive} />
+                </select> */}
             </div>
             <div className="listCards" style={styles} aria-label={`filtered movie/tv shows for ${topic}`}>
                 <Cards jsonResponse={apiResponse} topic={topic} isAwaitingAPIResponse={isAwaitingAPIResponse} />

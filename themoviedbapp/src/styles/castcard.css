@@ -15,6 +15,10 @@
     cursor: pointer;
 }
 
+.castCard:nth-child(1) {
+    margin-left: 0px;
+}
+
 .castProfilePicture {
     min-width: 138px;
     width: 138px;
@@ -37,10 +41,14 @@
     opacity: 0.6
 }
 
-.characterName {
+.characterName, .episodeCount {
     font-size: 14.4px;
     padding: 0 10px;
     padding-bottom: 0;
+}
+
+.episodeCount{
+    opacity: 0.5;
 }
 
 .viewMore {
@@ -66,7 +74,6 @@
 }
 
 .heading {
-    margin-left: 10px;
     font-size: 22.4px;
     font-weight: 600;
     margin-bottom: 20px;

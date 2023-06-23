@@ -1,6 +1,9 @@
-.socialSection {
+.socialSection, .latestSeasonSection {
     border-top: 1px solid #d7d7d7;
-    margin-left: -10px;
+    padding-bottom: 20px;
+}
+.topBilledSection{
+    margin-left: 10px;
     padding-bottom: 20px;
 }
 

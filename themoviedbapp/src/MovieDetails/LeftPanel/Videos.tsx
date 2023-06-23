@@ -1,12 +1,18 @@
-import { CSSProperties } from "react";
 import PlaySVG from '../../assets/play.svg'
-import { Video, openVideoInModal } from "./Media";
+import RightArrowSVG from '../../assets/right-arrow.svg'
+import { Video } from "./Media";
 
 interface Props {
-    videos: Array<Video>
+    videos: Array<Video>,
+    videoPlayerStatus: Boolean
 }
-function Videos({ videos }:Props) {
+function Videos({ videos, videoPlayerStatus }: Props) {
     const updateText: HTMLElement | null = document.querySelector(`.updateViewAllText`);
+    const openVideoInModal: Function = (streaming_path: string) => {
+        console.log(streaming_path);
+        const videoPlayer: HTMLElement | null = document.querySelector(`.videoPlayer`);
+        videoPlayer?.classList.toggle('isActive');
+    }
     if (updateText)
         updateText.innerHTML = "View All Videos";
     return (
@@ -14,15 +20,19 @@ function Videos({ videos }:Props) {
             {
                 videos.map((video: Video, index: number) => {
                     return (
-                        <div className="video" key={`videos-${index}`} onClick={(event)=>(openVideoInModal(video.streaming_path))}>
+                        <div className="video" key={`videos-${index}`} onClick={(event) => (openVideoInModal(video.streaming_path))}>
                             <img src={video.thumbnail_path} className="videoThumbnail"></img>
                             <div className="playButton">
-                                <img className="playButtonSVG" src={PlaySVG}></img>
+                                <img className="playButtonSVG" src={PlaySVG} alt="Play Video"></img>
                             </div>
                         </div>
                     )
                 })
             }
+            <div className="viewMorePopular" key={"viewMore"}>
+                <span className="viewMoreText">View More</span>
+                <span className="viewMoreSVG"><img src={RightArrowSVG} alt="View More" className="viewMoreSVG"></img></span>
+            </div>
         </div>
     )
 }
