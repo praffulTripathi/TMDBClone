@@ -1,5 +1,5 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import './castcard.css'
+import '../../styles/castcard.css'
 
 interface Cast {
     name: string,

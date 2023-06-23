@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './media.css'
+import '../../styles/media.css'
 import { getKeyValue, options } from "../../helper";
 import MostPopular from './MostPopular';
 import Videos from './Videos';
@@ -7,7 +7,8 @@ import Backdrops from './Backdrops';
 import Posters from './Posters';
 
 interface Props {
-    titleID: string
+    titleID: string,
+    videoPlayerStatus: Boolean
 }
 
 export interface Image {
@@ -20,13 +21,8 @@ export interface Video {
     name: string
 }
 
-export const openVideoInModal: Function = (streaming_path: string) => {
-    console.log(streaming_path);
-    const videoPlayer: HTMLElement | null = document.querySelector(`.videoPlayer`);
-    videoPlayer?.classList.toggle('isActive');
-}
 
-function Media({ titleID }: Props) {
+function Media({ titleID, videoPlayerStatus }: Props) {
     const [currentMediaFilter, setMediaFilter] = useState<string>('mostPopular');
     const [videos, setVideos] = useState<Array<Video>>([]);
     const [videosCount, setVideosCount] = useState<number>(0);
@@ -35,6 +31,7 @@ function Media({ titleID }: Props) {
     const [posters, setPosters] = useState<Array<Image>>([]);
     const [postersCount, setPostersCount] = useState<number>(0);
     const [mostPopular, setMostPopular] = useState<[Video, Image, Image] | null>(null);
+
     const toggleBottomPill: Function = (selector: string) => {
         const activePill: HTMLElement | null = document.querySelector(`.isMediaActive`);
         activePill?.classList.toggle('isMediaActive');
@@ -135,7 +132,7 @@ function Media({ titleID }: Props) {
                     </span>
                 </div>
                 {
-                    currentMediaFilter === "mostPopular" ? <MostPopular mostPopular={mostPopular} /> : currentMediaFilter === "videos" ? <Videos videos={videos} /> : currentMediaFilter === "backdrops" ? <Backdrops backdrops={backdrops} /> : <Posters posters={posters} />
+                    currentMediaFilter === "mostPopular" ? <MostPopular mostPopular={mostPopular} videoPlayerStatus={videoPlayerStatus} /> : currentMediaFilter === "videos" ? <Videos videos={videos} videoPlayerStatus={videoPlayerStatus} /> : currentMediaFilter === "backdrops" ? <Backdrops backdrops={backdrops} /> : <Posters posters={posters} />
                 }
             </div>
         )

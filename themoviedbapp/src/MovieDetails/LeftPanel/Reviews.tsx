@@ -1,6 +1,7 @@
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Review } from "./Social";
-import './reviews.css'
+import '../../styles/reviews.css'
+import StarSVG from '../../assets/yourRating-white.svg'
 
 interface Props {
     movieReviews: Review | null
@@ -15,15 +16,15 @@ function Reviews({ movieReviews }: Props) {
             month: 'long',
             day: 'numeric'
         };
-        let isReviewTruncated:boolean=false;
+        let isReviewTruncated: boolean = false;
         dateTimeFormatted = date.toLocaleDateString('en-US', formatOptions);
         const splitWords: Array<string> = movieReviews.content.split(' ');
-        let truncatedReview:string='';
+        let truncatedReview: string = '';
         if (splitWords.length > 200) {
-            isReviewTruncated=true;
+            isReviewTruncated = true;
             const truncatedWords = splitWords.slice(0, 200);
             truncatedReview = truncatedWords.join(' ');
-            truncatedReview+='...' 
+            truncatedReview += '...'
         }
         return (
             <div className="reviews">
@@ -33,9 +34,15 @@ function Reviews({ movieReviews }: Props) {
                             <LazyLoadImage className="authorAvatarImg" src={movieReviews.avatar_path} alt={movieReviews.author} loading='lazy' />
                         </div>
                         <div className="otherReviewDetails">
-                            <span className="reviewBy">
-                                A review by {movieReviews.author}
-                            </span>
+                            <div className="reviewBy">
+                                <span className="reviewByAuthor">
+                                    A review by {movieReviews.author}
+                                </span>
+                                <div className="reviewRating">
+                                    <img src={StarSVG} className="starRating"></img>
+                                    <span>{movieReviews.rating.toFixed(1)}</span>
+                                </div>
+                            </div>
                             <span className="reviewDateTime">
                                 Written by <b>{movieReviews.author}</b> on {dateTimeFormatted}
                             </span>
@@ -43,7 +50,7 @@ function Reviews({ movieReviews }: Props) {
                     </div>
                     <div className="reviewContent">
                         {
-                            isReviewTruncated===true?(<p>{truncatedReview}&nbsp;<span className="readTheRest">read the rest.</span></p>): (<p>{movieReviews.content}</p>)
+                            isReviewTruncated === true ? (<p>{truncatedReview}&nbsp;<span className="readTheRest">read the rest.</span></p>) : (<p>{movieReviews.content}</p>)
                         }
                     </div>
                 </div>

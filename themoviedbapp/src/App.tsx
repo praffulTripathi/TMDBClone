@@ -2,11 +2,11 @@ import './App.css';
 import './styles/landingPage.css'
 import './styles/header.css'
 import './styles/footer.css'
-import './styles/Body/body.css'
+import './styles/body.css'
 import './styles/scrollList.css'
-import './styles/Body/cards.css'
+import './styles/cards.css'
 import { BrowserRouter as Router, Route, redirect, Routes, createBrowserRouter } from 'react-router-dom';
-import LandingPage from './LandingPage';
+import LandingPage from './LandingPage/LandingPage';
 import MovieDetails from './MovieDetails/MovieDetails';
 
 

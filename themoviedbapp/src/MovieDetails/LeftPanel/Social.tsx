@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Discussions from "./Discussions";
 import Reviews from "./Reviews";
 import { getKeyValue, options } from "../../helper";
-import LandingPageSuspense from "../../LandingPageSuspense";
+import LandingPageSuspense from "../../LandingPage/LandingPageSuspense";
 
 interface Props {
     titleID: string

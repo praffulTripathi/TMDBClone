@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import LandingPageSuspense from './LandingPageSuspense';
+import LandingPageSuspense from './LandingPage/LandingPageSuspense';
 import { BrowserRouter, createBrowserRouter } from 'react-router-dom';
 import "@fontsource/source-sans-pro";
 import "@fontsource/source-sans-pro/300.css";

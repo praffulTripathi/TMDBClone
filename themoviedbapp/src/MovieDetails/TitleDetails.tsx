@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import TitleOverview from "./TitleOverview";
 import OtherTitleDetails from "./OtherTitleDetails";
-import LandingPageSuspense from "../LandingPageSuspense";
+import LandingPageSuspense from "../LandingPage/LandingPageSuspense";
 import { Helmet } from "react-helmet";
 import { LazyLoadComponent } from "react-lazy-load-image-component";
 import { getKeyValue } from "../helper";
 
 interface Props {
-    titleID: string
+    titleID: string,
+    videoPlayerStatus: Boolean
 }
 
 interface TitleDetails {
@@ -19,9 +20,9 @@ interface TitleDetails {
     runtime: string,
     tagline: string,
     genres: Array<string>,
-    vote_average: string,
+    vote_average: number,
     overview: string,
-    original_language: string,
+    original_language: string
 }
 interface Crew {
     name: string,
@@ -44,13 +45,19 @@ interface ReleaseDateNCertification {
     country_release_date: string,
     content_rating: string
 }
+export interface StreamingProvider {
+    logo_path: string,
+    link: string
+}
 
-function TitleDetails({ titleID }: Props) {
+function TitleDetails({ titleID, videoPlayerStatus }: Props) {
     const [titleInfo, setTitleInfo] = useState<TitleDetails | null>(null);
     const [titleCast, setTitleCast] = useState<Array<Cast>>([]);
     const [crewMembers, setCrewMembers] = useState<Array<Crew>>([]);
     const [otherTitleDetails, setOtherTitleDetails] = useState<OtherDetails | null>(null);
     const [releaseDateAndCertification, setReleaseDateAndCertification] = useState<ReleaseDateNCertification | null>(null);
+    const [providers, setProvider] = useState<StreamingProvider>();
+    const getProvidersByID: string = `https://api.themoviedb.org/3/movie/${titleID}/watch/providers`;
     const getTitleDetailsByID: string = `https://api.themoviedb.org/3/movie/${titleID}`;
     const getTitleCreditsByID: string = `https://api.themoviedb.org/3/movie/${titleID}/credits`;
     const releaseDateEndpointByID: string = `https://api.themoviedb.org/3/movie/${titleID}/release_dates`;
@@ -109,6 +116,24 @@ function TitleDetails({ titleID }: Props) {
             setTitleCast(titleCast => [...titleCast, crrCast]);
         })
     }
+    const getStreamingProviders = async (url: string, options: Object) => {
+        await fetch(url, options)
+            .then(response => response.json())
+            .then(response => {
+                const results: Object = getKeyValue(response, "results");
+                console.log(results);
+                if (Object.keys(results).length !== 0) {
+                    const indiaStreamingProviders = getKeyValue(results, "IN");
+                    const justWatchLink = getKeyValue(indiaStreamingProviders, "link");
+                    const buyMovie = getKeyValue(indiaStreamingProviders, "buy")[0];
+                    const rentMovie = getKeyValue(indiaStreamingProviders, "rent")[0];
+                    const streamingProviderLogo = buyMovie !== undefined ? getKeyValue(buyMovie, "logo_path") : getKeyValue(rentMovie, "logo_path");
+                    setProvider({ logo_path: "https://www.themoviedb.org/t/p/original/" + streamingProviderLogo, link: justWatchLink });
+                }
+            })
+            .catch(error => console.error(error));
+    }
+
     const getTitleDetailsAsync = async (url: string, options: object) => {
         await fetch(url, options)
             .then(response => response.json())
@@ -181,18 +206,14 @@ function TitleDetails({ titleID }: Props) {
     useEffect(() => {
         getTitleDetailsAsync(getTitleDetailsByID, options);
         getCastDetailsAsync(getTitleCreditsByID, options);
-        getReleaseDateAndCertification(releaseDateEndpointByID, options)
+        getReleaseDateAndCertification(releaseDateEndpointByID, options);
+        getStreamingProviders(getProvidersByID, options);
     }, [])
 
     const formatCardTitleToRoute: Function = (title: string) => {
         title = title.replace(/ /g, '-');
         title = title.replace(/:/g, '');
         return title;
-    }
-    if (titleInfo == null) {
-        return (
-            <LandingPageSuspense />
-        )
     }
 
     if (titleInfo != null && crewMembers.length > 0 && releaseDateAndCertification != null) {
@@ -201,9 +222,10 @@ function TitleDetails({ titleID }: Props) {
             <div className="bodyContent">
                 <Helmet><title>{pageTitle}</title></Helmet>
 
-                <TitleOverview titleInfo={titleInfo} titleID={titleID} credits={crewMembers} releaseDateAndCertification={releaseDateAndCertification} />
+                <TitleOverview titleInfo={titleInfo} titleID={titleID} credits={crewMembers} releaseDateAndCertification={releaseDateAndCertification} providers={providers} />
+
                 <section className="otherTitleDetails">
-                    <OtherTitleDetails titleCast={titleCast} titleID={titleID} otherTitleDetails={otherTitleDetails} />
+                    <OtherTitleDetails titleCast={titleCast} titleID={titleID} otherTitleDetails={otherTitleDetails} videoPlayerStatus={videoPlayerStatus} providers={providers}/>
                 </section>
             </div>
         )

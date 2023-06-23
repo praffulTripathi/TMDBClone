@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import './keywords.css'
+import '../../styles/keywords.css'
 
 interface Props {
     titleID: string

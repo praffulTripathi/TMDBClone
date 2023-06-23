@@ -1,5 +1,5 @@
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import './recommendationCard.css'
+import '../../styles/recommendationCard.css'
 import FavoriteSvg from '../../assets/favorite.svg'
 import WatchlistSvg from '../../assets/watchlist.svg'
 import YourRatingSvg from '../../assets/yourRating.svg'

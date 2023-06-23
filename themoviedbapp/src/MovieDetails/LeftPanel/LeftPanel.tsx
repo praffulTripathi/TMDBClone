@@ -3,7 +3,7 @@ import Media from "./Media";
 import Recommendations from "./Recommendations";
 import Social from "./Social";
 import RightArrowSVG from '../../assets/right-arrow.svg'
-import './social.css'
+import '../../styles/social.css'
 
 interface Cast {
     name: string,
@@ -12,9 +12,10 @@ interface Cast {
 }
 interface Props {
     titleCast: Array<Cast>,
-    titleID: string
+    titleID: string,
+    videoPlayerStatus: Boolean
 }
-function LeftPanel({ titleCast, titleID }: Props) {
+function LeftPanel({ titleCast, titleID, videoPlayerStatus }: Props) {
     return (
         <div className="leftPanel">
             <div className="topBilledCast">
@@ -27,7 +28,7 @@ function LeftPanel({ titleCast, titleID }: Props) {
                             else return (
                                 <div className="viewMore" key={"viewMore"}>
                                     <span className="viewMoreText">View More</span>
-                                    <span className="arrowSVG"><img src={RightArrowSVG}></img></span>
+                                    <span className="arrowSVG"><img src={RightArrowSVG} alt="View More"></img></span>
                                 </div>
                             )
                         })
@@ -36,10 +37,10 @@ function LeftPanel({ titleCast, titleID }: Props) {
                 <div className="fullCastNCrew">Full Cast & Crew</div>
             </div>
             <section className="socialSection">
-                <Social titleID={titleID}/>
+                <Social titleID={titleID} />
             </section>
             <section className="mediaSection">
-                <Media titleID={titleID}/>
+                <Media titleID={titleID} videoPlayerStatus={videoPlayerStatus} />
             </section>
             <section className="recommendationsSection">
                 <Recommendations titleID={titleID} />

@@ -1,4 +1,4 @@
-import ImageNotLoadedSVG from './assets/image-icon.svg'
+import ImageNotLoadedSVG from '../assets/image-icon.svg'
 
 function CardNotLoaded() {
     return (

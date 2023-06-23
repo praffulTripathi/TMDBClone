@@ -1,5 +1,6 @@
 import LeftPanel from "./LeftPanel/LeftPanel";
 import RightPanel from "./RightPanel/RightPanel";
+import { StreamingProvider } from "./TitleDetails";
 
 interface Cast {
     name: string,
@@ -18,15 +19,17 @@ interface OtherDetails {
 interface Props {
     titleCast: Array<Cast>,
     titleID: string,
-    otherTitleDetails: OtherDetails | null
+    otherTitleDetails: OtherDetails | null,
+    videoPlayerStatus: Boolean,
+    providers: StreamingProvider|undefined
 }
 
-function OtherTitleDetails({ titleCast, titleID, otherTitleDetails}: Props) {
+function OtherTitleDetails({ titleCast, titleID, otherTitleDetails, videoPlayerStatus, providers }: Props) {
     titleCast = titleCast.slice(0, 11);
     return (
         <div className="otherDetails">
-            <LeftPanel titleCast={titleCast} titleID={titleID}></LeftPanel>
-            <RightPanel otherTitleDetails={otherTitleDetails} titleID={titleID}></RightPanel>
+            <LeftPanel titleCast={titleCast} titleID={titleID} videoPlayerStatus={videoPlayerStatus}></LeftPanel>
+            <RightPanel otherTitleDetails={otherTitleDetails} titleID={titleID} providers={providers}></RightPanel>
         </div>
     )
 }

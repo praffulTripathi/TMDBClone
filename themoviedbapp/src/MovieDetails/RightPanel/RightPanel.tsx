@@ -1,7 +1,10 @@
 import Keywords from "./Keywords";
 import OtherTitleDetails from "../OtherTitleDetails";
 import SocialMediaLinks from "./SocialMediaLinks";
-import './rightpanel.css'
+import '../../styles/rightpanel.css'
+import { useEffect, useState } from "react";
+import { getKeyValue, options } from "../../helper";
+import { StreamingProvider } from "../TitleDetails";
 
 export interface OtherDetails {
     status: string,
@@ -13,10 +16,11 @@ export interface OtherDetails {
 
 interface Props {
     otherTitleDetails: OtherDetails | null,
-    titleID: string
+    titleID: string,
+    providers: StreamingProvider | undefined
 }
 
-function RightPanel({ otherTitleDetails, titleID }: Props) {
+function RightPanel({ otherTitleDetails, titleID, providers }: Props) {
     if (otherTitleDetails != null) {
         const formatDollars: Function = (amount: number): string => {
             return amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
@@ -26,7 +30,7 @@ function RightPanel({ otherTitleDetails, titleID }: Props) {
         return (
             <div className="rightPanel">
                 <section className="titleFacts">
-                    <SocialMediaLinks titleID={titleID} homepageLink={otherTitleDetails.homepage} />
+                    <SocialMediaLinks titleID={titleID} homepageLink={otherTitleDetails.homepage} providers={providers} />
                     <div className="titleStatus">
                         <div className="status">
                             <span><b>Status</b></span>
@@ -55,7 +59,7 @@ function RightPanel({ otherTitleDetails, titleID }: Props) {
                     </div>
                 </section>
                 <section className="contributors">
-                    
+
                 </section>
             </div>
         )
