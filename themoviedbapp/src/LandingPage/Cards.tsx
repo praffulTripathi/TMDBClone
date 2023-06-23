@@ -76,10 +76,11 @@ function Cards({ jsonResponse, topic, isAwaitingAPIResponse }: Props): any {
         let cardsToDisplay: Array<CardDetails> = [];
         results?.map((result, index) => {
             if (getKeyValue(result, "title") !== undefined || getKeyValue(result, "name")) {
+                const mediaType:string = getKeyValue(result, "media_type")===undefined ? 'tv' : getKeyValue(result, "media_type")
                 let newCard: CardDetails = {
                     title: getKeyValue(result, "title") == undefined ? getKeyValue(result, "name") : getKeyValue(result, "title"),
                     id: getKeyValue(result, "id"),
-                    media_type: getKeyValue(result, "media_type"),
+                    media_type: mediaType,
                     release_date: transformDateTime(result),
                     vote_average: formatAverageToPercentage(result),
                     poster_path: "https://www.themoviedb.org/t/p/w220_and_h330_face" + getKeyValue(result, "poster_path"),

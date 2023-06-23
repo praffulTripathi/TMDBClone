@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import RecommendationCard from "./RecommendationCard";
+import { ThemeContext, TitleTypeProp } from "../../AppContext";
 
 interface Recommendation {
     title: string,
@@ -11,8 +12,9 @@ interface Props {
     titleID: string
 }
 function Recommendations({ titleID }: Props) {
+    const { mediaType }: TitleTypeProp = useContext(ThemeContext);
     const [recommendations, setRecommendations] = useState<Array<Recommendation>>([]);
-    const recommendationsEndpoint = `https://api.themoviedb.org/3/movie/${titleID}/recommendations`;
+    const recommendationsEndpoint = `https://api.themoviedb.org/3/${mediaType}/${titleID}/recommendations`;
     function getKeyValue(object: any, key: string): any {
         if (object.hasOwnProperty(key))
             return object[key];
@@ -41,10 +43,10 @@ function Recommendations({ titleID }: Props) {
                 setRecommendations(recommendations => {
                     const allRecommendations: Array<Recommendation> = results.map(recommendation => {
                         const newRecommendation: Recommendation = {
-                            title: getKeyValue(recommendation, "title"),
+                            title: mediaType==="movie"?getKeyValue(recommendation, "title"):getKeyValue(recommendation, "original_name"),
                             vote_average: formatVoteAverage(getKeyValue(recommendation, "vote_average")),
                             poster_path: "https://www.themoviedb.org/t/p/w250_and_h141_face/" + getKeyValue(recommendation, "poster_path"),
-                            release_date: formatReleaseDate(getKeyValue(recommendation, "release_date"))
+                            release_date: formatReleaseDate(mediaType==="movie"?getKeyValue(recommendation, "release_date"):getKeyValue(recommendation, "first_air_date"))
                         }
                         return newRecommendation;
                     })

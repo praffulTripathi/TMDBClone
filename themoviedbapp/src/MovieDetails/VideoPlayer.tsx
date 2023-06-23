@@ -1,6 +1,6 @@
 
 import CloseIcon from '../assets/close-icon.svg'
-import { VideoDetails } from './MovieDetails';
+import { VideoDetails } from './TitleInfoLandingPage';
 
 
 interface Props {

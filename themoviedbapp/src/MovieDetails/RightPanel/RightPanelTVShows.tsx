@@ -2,9 +2,9 @@ import Keywords from "./Keywords";
 import OtherTitleDetails from "../Movie/OtherMovieDetails";
 import SocialMediaLinks from "./SocialMediaLinks";
 import '../../styles/rightpanel.css'
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getKeyValue, options } from "../../helper";
-import { StreamingProvider } from "../TitleDetails";
+import { StreamingProvider, TVDetails } from "../TitleDetails";
 
 export interface OtherDetails {
     status: string,
@@ -15,37 +15,39 @@ export interface OtherDetails {
 }
 
 interface Props {
-    otherTitleDetails: OtherDetails | undefined,
+    titleInfo: TVDetails,
     titleID: string,
     providers: StreamingProvider | undefined
 }
 
-function RightPanel({ otherTitleDetails, titleID, providers }: Props) {
-    if (otherTitleDetails != null) {
+function RightPanelTVShows({titleInfo, titleID, providers }: Props) {
+    if (titleInfo !== undefined) {
         const formatDollars: Function = (amount: number): string => {
             return amount.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
         }
-        const languageCode: string = otherTitleDetails?.original_language;
+        const languageCode: string = titleInfo.original_language;
         const languageCodeToEnglish = new Intl.DisplayNames(['en'], { type: 'language' }).of(languageCode);
         return (
             <div className="rightPanel">
                 <section className="titleFacts">
-                    <SocialMediaLinks titleID={titleID} homepageLink={otherTitleDetails.homepage} providers={providers} />
+                    <SocialMediaLinks titleID={titleID} homepageLink={titleInfo.homepage} providers={providers} />
                     <div className="titleStatus">
                         <div className="status">
                             <span><b>Status</b></span>
-                            <span>{otherTitleDetails?.status}</span>
+                            <span>{titleInfo?.status}</span>
+                        </div>
+                        <div className="network">
+                            <span><b>Network</b></span>
+                            <img src={titleInfo.network_logo} className="networkLogo"></img>
+                        </div>
+                        <div className="type">
+                            <span><b>Type</b></span>
+                            <span>{titleInfo.type}</span>
                         </div>
                         <div className="originalLanguage">
                             <span><b>Original Language</b></span>
                             <span>{languageCodeToEnglish}</span>
                         </div>
-                        <div className="budget">
-                            <span><b>Budget</b></span>
-                            <span>{formatDollars(otherTitleDetails?.budget)}</span></div>
-                        <div className="revenue">
-                            <span><b>Revenue</b></span>
-                            <span>{formatDollars(otherTitleDetails?.revenue)}</span></div>
                     </div>
                     <Keywords titleID={titleID} />
                 </section>
@@ -66,4 +68,4 @@ function RightPanel({ otherTitleDetails, titleID, providers }: Props) {
     }
     else { return (<></>) }
 }
-export default RightPanel;
+export default RightPanelTVShows;

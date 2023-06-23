@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Discussions from "./Discussions";
 import Reviews from "./Reviews";
 import { getKeyValue, options } from "../../helper";
 import LandingPageSuspense from "../../LandingPage/LandingPageSuspense";
+import { ThemeContext, TitleTypeProp } from "../../AppContext";
 
 interface Props {
     titleID: string
@@ -16,6 +17,7 @@ export interface Review {
     total_reviews: number
 }
 function Social({ titleID }: Props) {
+    const { mediaType }: TitleTypeProp = useContext(ThemeContext);
     const toggleBottomPill: Function = (selector: string) => {
         const reviewsPill: HTMLElement | null = document.querySelector(`.bottomPill.reviews`);
         const discussionsPill: HTMLElement | null = document.querySelector(`.bottomPill.discussions`);
@@ -23,7 +25,7 @@ function Social({ titleID }: Props) {
         discussionsPill?.classList.toggle('isActive');
     }
     const [movieReviews, setMovieReviews] = useState<Review | null>(null);
-    const movieReviewsURL: string = `https://api.themoviedb.org/3/movie/${titleID}/reviews`;
+    const movieReviewsURL: string = `https://api.themoviedb.org/3/${mediaType}/${titleID}/reviews`;
     const getMovieReviews: Function = async (url: string, options: Object) => {
         await fetch(url, options)
             .then(response => response.json())
@@ -37,18 +39,18 @@ function Social({ titleID }: Props) {
                         const rating: number | null = getKeyValue(authorDetails, "rating");
                         if (rating != null) {
                             const avatar_path: string = getKeyValue(authorDetails, "avatar_path");
-                            if (avatar_path !== null) {
-                                const normalizedPath: string = avatar_path.includes("https") ? (avatar_path[0] !== '/' ? avatar_path : avatar_path.slice(1)) : "https://www.themoviedb.org/t/p/w64_and_h64_face" + avatar_path;
-                                const reviewObject: Review = {
-                                    author: author,
-                                    avatar_path: normalizedPath,
-                                    rating: rating,
-                                    content: getKeyValue(result, "content"),
-                                    created_at: getKeyValue(result, "created_at"),
-                                    total_reviews: totalReviews
-                                }
-                                setMovieReviews(reviewObject);
+                            let normalizedPath:string='';
+                            if(avatar_path!=null)
+                                normalizedPath = avatar_path?.includes("https") ? (avatar_path[0] !== '/' ? avatar_path : avatar_path.slice(1)) : "https://www.themoviedb.org/t/p/w64_and_h64_face" + avatar_path;
+                            const reviewObject: Review = {
+                                author: author,
+                                avatar_path: normalizedPath,
+                                rating: rating,
+                                content: getKeyValue(result, "content"),
+                                created_at: getKeyValue(result, "created_at"),
+                                total_reviews: totalReviews
                             }
+                            setMovieReviews(reviewObject);
                             return;
                         }
                     }
@@ -74,7 +76,6 @@ function Social({ titleID }: Props) {
                     <div className="socialOptions" onClick={(event) => toggleBottomPill()}>
                         <div className="reviewsAndCount">
                             <div className="socialOptionText">Discussions</div>
-                            {/* <div className="countResults">{movieReviews.total_reviews}</div> */}
                         </div>
                         <div className="bottomPill discussions"></div>
                     </div>
@@ -87,7 +88,7 @@ function Social({ titleID }: Props) {
     }
     else return (
         <>
-            <LandingPageSuspense />
+
         </>
     )
 }

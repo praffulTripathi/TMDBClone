@@ -1,6 +1,6 @@
 import { LazyLoadImage } from "react-lazy-load-image-component"
 import { Image, Video } from "./Media"
-import { CSSProperties } from "react";
+import RightArrowSVG from '../../assets/right-arrow.svg'
 import PlaySVG from '../../assets/play.svg'
 
 interface Props {
@@ -29,7 +29,11 @@ function MostPopular({ mostPopular, videoPlayerStatus }: Props) {
                     <LazyLoadImage className="backdrop" src={mostPopular[1].image_path} alt='backdrop' loading='lazy' />
                 </div>
                 <div className="poster">
-                    <LazyLoadImage className="poster" src={mostPopular[2].image_path} alt='poster' loading='lazy' />
+                    <LazyLoadImage className="mediaPoster" src={mostPopular[2].image_path} alt='poster' loading='lazy' />
+                </div>
+                <div className="viewMorePopular" key={"viewMore"}>
+                    <span className="viewMoreText">View More</span>
+                    <span className="viewMoreSVG"><img src={RightArrowSVG} alt="View More" className="viewMoreSVG"></img></span>
                 </div>
             </div>
         )

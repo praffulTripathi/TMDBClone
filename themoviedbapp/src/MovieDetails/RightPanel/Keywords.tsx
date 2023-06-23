@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import '../../styles/keywords.css'
+import { ThemeContext, TitleTypeProp } from "../../AppContext";
 
 interface Props {
     titleID: string
 }
 
 function Keywords({ titleID }: Props) {
-
+    const { mediaType }: TitleTypeProp = useContext(ThemeContext);
     const [keywords, setKeywords] = useState<Array<string>>([]);
-    const getTitleKeywordsByID: string = `https://api.themoviedb.org/3/movie/${titleID}/keywords`;
+    const getTitleKeywordsByID: string = `https://api.themoviedb.org/3/${mediaType}/${titleID}/keywords`;
     function getKeyValue(object: any, key: string): any {
         if (object.hasOwnProperty(key))
             return object[key];
@@ -24,7 +25,7 @@ function Keywords({ titleID }: Props) {
         await fetch(url, options)
             .then(response => response.json())
             .then(response => {
-                const responseKeywords: Array<Object> = getKeyValue(response, "keywords");
+                const responseKeywords: Array<Object> = mediaType==="tv"?getKeyValue(response, "results"):getKeyValue(response,"keywords");
                 const keywords = responseKeywords?.map((keywordObject: Object, index: number) => {
                     return getKeyValue(keywordObject, "name");
                 });

@@ -1,12 +1,6 @@
-import LeftPanel from "./LeftPanel/LeftPanel";
-import RightPanel from "./RightPanel/RightPanel";
-import { StreamingProvider } from "./TitleDetails";
-
-interface Cast {
-    name: string,
-    characterName: string,
-    castProfilePicture: string
-}
+import LeftPanel from "../LeftPanel/LeftPanel";
+import RightPanel from "../RightPanel/RightPanel";
+import { StreamingProvider, TVShowCast } from "../TitleDetails";
 
 interface OtherDetails {
     status: string,
@@ -17,14 +11,14 @@ interface OtherDetails {
 }
 
 interface Props {
-    titleCast: Array<Cast>,
+    titleCast: Array<TVShowCast>,
     titleID: string,
-    otherTitleDetails: OtherDetails | null,
-    videoPlayerStatus: Boolean,
+    otherTitleDetails: OtherDetails | undefined,
+    videoPlayerStatus: boolean,
     providers: StreamingProvider|undefined
 }
 
-function OtherTitleDetails({ titleCast, titleID, otherTitleDetails, videoPlayerStatus, providers }: Props) {
+function OtherMovieDetails({ titleCast, titleID, otherTitleDetails, videoPlayerStatus, providers }: Props) {
     titleCast = titleCast.slice(0, 11);
     return (
         <div className="otherDetails">
@@ -33,4 +27,4 @@ function OtherTitleDetails({ titleCast, titleID, otherTitleDetails, videoPlayerS
         </div>
     )
 }
-export default OtherTitleDetails;
+export default OtherMovieDetails;

@@ -16,7 +16,7 @@ export interface VideoDetails {
 //   value
 // }
 
-function MovieDetails() {
+function TitleInfoLandingPage() {
   const routeURL: string = useLocation().pathname;
   const titleID = useRef<string>(routeURL.split('/')[2].split('-')[0]);
   const titleName = useRef<string>(routeURL.split('/')[2].split('-')[1]);
@@ -39,4 +39,4 @@ function MovieDetails() {
     </div>
   )
 }
-export default MovieDetails;
+export default TitleInfoLandingPage;

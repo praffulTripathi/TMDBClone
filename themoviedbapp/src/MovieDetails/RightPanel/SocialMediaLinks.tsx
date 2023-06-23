@@ -5,10 +5,11 @@ import HomepageLinkSVG from '../../assets/homepage-link.svg'
 import JustWatchSVG from '../../assets/justWatch.svg'
 import '../../styles/socialMediaLinks.css'
 import { OtherDetails } from './RightPanel'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { getKeyValue, options } from '../../helper'
-import { enableDropdown } from '../TitleOverview'
+import { enableDropdown } from '../Movie/MovieOverview'
 import { StreamingProvider } from '../TitleDetails'
+import { ThemeContext, TitleTypeProp } from '../../AppContext'
 
 interface ExternalLinks {
     facebook: string,
@@ -23,7 +24,8 @@ interface Props {
 }
 
 function SocialMediaLinks({ titleID, homepageLink, providers }: Props) {
-    const externalLinksURL = `https://api.themoviedb.org/3/movie/${titleID}/external_ids`;
+    const { mediaType }: TitleTypeProp = useContext(ThemeContext);
+    const externalLinksURL = `https://api.themoviedb.org/3/${mediaType}/${titleID}/external_ids`;
     const [externalLinks, setExternalLinks] = useState<ExternalLinks>({ facebook: '', twitter: '', instagram: '', homepage: homepageLink });
 
     const getExternalLinks: Function = async (url: string, options: Object) => {
@@ -47,7 +49,7 @@ function SocialMediaLinks({ titleID, homepageLink, providers }: Props) {
                 externalLinks.facebook !== '' ?
                     <div className="socialLink" onMouseOver={(event) => enableDropdown('options-facebook')} onMouseOut={(event) => enableDropdown('options-facebook')}>
                         <a href={externalLinks.facebook} target="_blank" rel="noopener noreferrer">
-                            <img src={FacebookSVG} className="socialSVG" alt="visit facebook"></img>
+                            <img src={FacebookSVG} className="socialSVGLink" alt="visit facebook"></img>
                         </a>
                         <div className="titleOptionsTooltip socialLinkToolTip" id="options-facebook-tooltip">Visit Facebook</div>
                     </div> : null
@@ -56,7 +58,7 @@ function SocialMediaLinks({ titleID, homepageLink, providers }: Props) {
                 externalLinks.twitter !== '' ?
                     <div className="socialLink" onMouseOver={(event) => enableDropdown('options-twitter')} onMouseOut={(event) => enableDropdown('options-twitter')}>
                         <a href={externalLinks.twitter} target="_blank" rel="noopener noreferrer">
-                            <img src={TwitterSVG} className="socialSVG" alt="Visit Twitter"></img>
+                            <img src={TwitterSVG} className="socialSVGLink" alt="Visit Twitter"></img>
                         </a>
                         <div className="titleOptionsTooltip socialLinkToolTip" id="options-twitter-tooltip">Visit Twitter</div>
                     </div> : null
@@ -65,7 +67,7 @@ function SocialMediaLinks({ titleID, homepageLink, providers }: Props) {
                 externalLinks.instagram !== '' ?
                     <div className="socialLink" onMouseOver={(event) => enableDropdown('options-instagram')} onMouseOut={(event) => enableDropdown('options-instagram')}>
                         <a href={externalLinks.instagram} target="_blank" rel="noopener noreferrer">
-                            <img src={InstaSVG} className="socialSVG" alt="Visit Instagram"></img>
+                            <img src={InstaSVG} className="socialSVGLink" alt="Visit Instagram"></img>
                         </a>
                         <div className="titleOptionsTooltip socialLinkToolTip" id="options-instagram-tooltip">Visit Instagram</div>
                     </div> : null
@@ -74,7 +76,7 @@ function SocialMediaLinks({ titleID, homepageLink, providers }: Props) {
                 providers !== undefined ?
                     <div className="socialLink" onMouseOver={(event) => enableDropdown('options-justwatch')} onMouseOut={(event) => enableDropdown('options-justwatch')}>
                         <a href={providers.link} target="_blank" rel="noopener noreferrer">
-                            <img src={JustWatchSVG} className="socialSVG homepage justWatch" alt="Visit Justwatch"></img>
+                            <img src={JustWatchSVG} className="socialSVGLink homepage justWatch" alt="Visit Justwatch"></img>
                         </a>
                         <div className="titleOptionsTooltip socialLinkToolTip" id="options-justwatch-tooltip">Visit JustWatch</div>
                     </div> : null
@@ -83,7 +85,7 @@ function SocialMediaLinks({ titleID, homepageLink, providers }: Props) {
                 externalLinks.homepage !== '' ?
                     <div className="socialLink" onMouseOver={(event) => enableDropdown('options-homepage')} onMouseOut={(event) => enableDropdown('options-homepage')}>
                         <a href={externalLinks.homepage} target="_blank" rel="noopener noreferrer">
-                            <img src={HomepageLinkSVG} className="socialSVG homepage" alt="Visit Homepage"></img>
+                            <img src={HomepageLinkSVG} className="socialSVGLink homepage" alt="Visit Homepage"></img>
                         </a>
                         <div className="titleOptionsTooltip socialLinkToolTip" id="options-homepage-tooltip">Visit Homepage</div>
                     </div> : null

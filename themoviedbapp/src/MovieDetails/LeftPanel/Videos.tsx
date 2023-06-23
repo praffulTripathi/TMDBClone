@@ -1,5 +1,5 @@
-import { CSSProperties } from "react";
 import PlaySVG from '../../assets/play.svg'
+import RightArrowSVG from '../../assets/right-arrow.svg'
 import { Video } from "./Media";
 
 interface Props {
@@ -29,6 +29,10 @@ function Videos({ videos, videoPlayerStatus }: Props) {
                     )
                 })
             }
+            <div className="viewMorePopular" key={"viewMore"}>
+                <span className="viewMoreText">View More</span>
+                <span className="viewMoreSVG"><img src={RightArrowSVG} alt="View More" className="viewMoreSVG"></img></span>
+            </div>
         </div>
     )
 }

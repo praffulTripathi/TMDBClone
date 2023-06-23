@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     border-top: 1px solid #d7d7d7;
-    margin-left: -10px;
     padding: 30px 0;
 }
 
@@ -74,12 +73,35 @@
     transition: opacity 0.3s ease;
 }
 
-.backdrop {
-    width: 533px;
+.backdrop, .viewMorePopular {
+    min-width: 533px;
     height: 300px;
 }
+.viewMorePopular, .viewMorePosters{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-left: 30px;
+    align-items: center;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 20.8px;
+    font-weight: normal;
+}
 
-.poster {
-    width: 150px;
-    height: 225px;
+.viewMorePosters{
+    width: 200px;
+    height: 300px;
+    margin-right: 70px;
+}
+
+.viewMoreSVG{
+    padding-left: 4px;
+    height: 22px;
+    width: 24px;
+}
+
+.mediaPoster {
+    width: 200px;
+    height: 300px;
 }

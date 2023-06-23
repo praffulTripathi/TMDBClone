@@ -1,17 +1,17 @@
 
 import { CSSProperties, useEffect, useRef, useState } from 'react';
-import '../styles/titleoverview.css'
-import ArrowExpandSVG from '../assets/arrow-expand.svg'
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { Helmet } from 'react-helmet';
-import AddToListSvg from '../assets/add-to-list-white.svg'
-import FavoriteSvg from '../assets/favorite-white.svg'
-import WatchlistSvg from '../assets/watchlist-white.svg'
-import YourRatingSvg from '../assets/yourRating-white.svg'
-import PlaySvg from '../assets/play.svg'
-import UserScore from '../UserScore';
-import { getKeyValue, options } from '../helper';
-import { StreamingProvider } from './TitleDetails';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { getKeyValue, options } from '../../helper';
+import { StreamingProvider } from '../TitleDetails';
+import ArrowExpandSVG from '../../assets/arrow-expand.svg'
+import AddToListSvg from '../../assets/add-to-list-white.svg'
+import FavoriteSvg from '../../assets/favorite-white.svg'
+import WatchlistSvg from '../../assets/watchlist-white.svg'
+import YourRatingSvg from '../../assets/yourRating-white.svg'
+import PlaySvg from '../../assets/play.svg'
+import UserScore from '../../UserScore';
+import '../../styles/titleoverview.css'
 
 interface TitleDetails {
     original_title: string,
@@ -40,7 +40,7 @@ interface Props {
     titleInfo: TitleDetails,
     credits: Array<Crew>,
     titleID: string,
-    releaseDateAndCertification: ReleaseDateNCertification,
+    releaseDateAndCertification: ReleaseDateNCertification | undefined,
     providers: StreamingProvider | undefined
 }
 
@@ -49,7 +49,7 @@ export const enableDropdown: Function = (listActionToToggle: string) => {
     dropdownListToToggle?.classList.toggle("displayActions")
 }
 
-function TitleOverview({ titleInfo, titleID, credits, releaseDateAndCertification, providers }: Props) {
+function MovieOverview({ titleInfo, titleID, credits, releaseDateAndCertification, providers }: Props) {
     let titleWrapperBkgImage: CSSProperties = {};
     titleWrapperBkgImage.backgroundImage = `url(${titleInfo.backdrop_path})`;
     credits = credits.slice(0, Math.min(7, credits.length));
@@ -102,9 +102,9 @@ function TitleOverview({ titleInfo, titleID, credits, releaseDateAndCertificatio
                         <span className="yearOfRelease">({titleInfo.year_of_release})</span>
                     </div>
                     <div className="genreAndRunTime">
-                        <span className="contentRating">{releaseDateAndCertification.content_rating}</span>
-                        <span className="titleReleaseDate">{releaseDateAndCertification.country_release_date}</span>
-                        <span className="countryOfRelease">&nbsp;{releaseDateAndCertification.country}</span>
+                        <span className="contentRating">{releaseDateAndCertification?.content_rating}</span>
+                        <span className="titleReleaseDate">{releaseDateAndCertification?.country_release_date}</span>
+                        <span className="countryOfRelease">&nbsp;{releaseDateAndCertification?.country}</span>
                         <div className="genreDotOuter"><div className="dotInner"></div></div>
                         <div className="genres">
                             {
@@ -178,4 +178,4 @@ function TitleOverview({ titleInfo, titleID, credits, releaseDateAndCertificatio
         </div>
     )
 }
-export default TitleOverview;
+export default MovieOverview;
