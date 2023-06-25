@@ -65,7 +65,7 @@ function MovieOverview({ titleInfo, titleID, credits, releaseDateAndCertificatio
         const hiddenBlurredDiv: HTMLElement | null = document.querySelector('.hiddenBlurredDiv');
         hiddenBlurredDiv?.classList.toggle('isBlurActive');
     }
-
+    
     return (
         <div className="titleWrapper">
             <div className="background" style={titleWrapperBkgImage}></div>
@@ -102,7 +102,11 @@ function MovieOverview({ titleInfo, titleID, credits, releaseDateAndCertificatio
                         <span className="yearOfRelease">({titleInfo.year_of_release})</span>
                     </div>
                     <div className="genreAndRunTime">
-                        <span className="contentRating">{releaseDateAndCertification?.content_rating}</span>
+                        {
+                            releaseDateAndCertification?.content_rating === undefined || releaseDateAndCertification?.content_rating === "" ?
+                                <span className="contentRating">PG-13</span> :
+                                <span className="contentRating">{releaseDateAndCertification?.content_rating}</span>
+                        }
                         <span className="titleReleaseDate">{releaseDateAndCertification?.country_release_date}</span>
                         <span className="countryOfRelease">&nbsp;{releaseDateAndCertification?.country}</span>
                         <div className="genreDotOuter"><div className="dotInner"></div></div>

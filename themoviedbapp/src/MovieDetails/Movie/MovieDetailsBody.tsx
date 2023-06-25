@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import TitleOverview from "./MovieOverview";
 import OtherTitleDetails from "./OtherMovieDetails";
 import MovieOverview from "./MovieOverview";
+import LandingPageSuspense from "../../LandingPage/LandingPageSuspense";
 
 interface Props {
     movieID: string
@@ -81,9 +82,10 @@ function MovieDetailsBody({ movieID }: Props) {
                 if (Object.keys(results).length !== 0) {
                     const indiaStreamingProviders = getKeyValue(results, "IN");
                     const justWatchLink = getKeyValue(indiaStreamingProviders, "link");
-                    const buyMovie = getKeyValue(indiaStreamingProviders, "buy")[0];
-                    const rentMovie = getKeyValue(indiaStreamingProviders, "rent")[0];
-                    const streamingProviderLogo = buyMovie !== undefined ? getKeyValue(buyMovie, "logo_path") : getKeyValue(rentMovie, "logo_path");
+                    const buyMovie = getKeyValue(indiaStreamingProviders, "buy")!==undefined? getKeyValue(indiaStreamingProviders, "buy")[0]:undefined;
+                    const rentMovie = getKeyValue(indiaStreamingProviders, "rent")!==undefined? getKeyValue(indiaStreamingProviders, "rent")[0]:undefined;
+                    const flatrate = getKeyValue(indiaStreamingProviders, "flatrate")[0]
+                    const streamingProviderLogo = buyMovie !== undefined ? getKeyValue(buyMovie, "logo_path") : rentMovie!==undefined ? getKeyValue(rentMovie, "logo_path") : getKeyValue(flatrate,"logo_path") ;
                     setProvider({ logo_path: "https://www.themoviedb.org/t/p/original/" + streamingProviderLogo, link: justWatchLink });
                 }
             })
@@ -190,6 +192,7 @@ function MovieDetailsBody({ movieID }: Props) {
             </div>
         )
     }
-    else return(<></>)
+    else return(<LandingPageSuspense />
+)
 }
 export default MovieDetailsBody;

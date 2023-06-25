@@ -12,10 +12,6 @@ export interface VideoDetails {
   video_path: string
 }
 
-// interface Props {
-//   value
-// }
-
 function TitleInfoLandingPage() {
   const routeURL: string = useLocation().pathname;
   const titleID = useRef<string>(routeURL.split('/')[2].split('-')[0]);

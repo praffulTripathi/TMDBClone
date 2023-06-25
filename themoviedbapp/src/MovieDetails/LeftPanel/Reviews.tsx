@@ -26,12 +26,17 @@ function Reviews({ movieReviews }: Props) {
             truncatedReview = truncatedWords.join(' ');
             truncatedReview += '...'
         }
+        console.log();
         return (
             <div className="reviews">
                 <div className="reviewCard">
                     <div className="authorDetails">
                         <div className="authorAvatar">
-                            <LazyLoadImage className="authorAvatarImg" src={movieReviews.avatar_path} alt={movieReviews.author} loading='lazy' />
+                            {
+                                movieReviews.avatar_path===""?
+                                <div className="authorAvatarImg noAuthor">{movieReviews.author.slice(0,1)}</div>:
+                                <LazyLoadImage className="authorAvatarImg" src={movieReviews.avatar_path} alt={movieReviews.author} loading='lazy' />
+                            }
                         </div>
                         <div className="otherReviewDetails">
                             <div className="reviewBy">
@@ -39,7 +44,7 @@ function Reviews({ movieReviews }: Props) {
                                     A review by {movieReviews.author}
                                 </span>
                                 <div className="reviewRating">
-                                    <img src={StarSVG} className="starRating"></img>
+                                    <img src={StarSVG} className="starRating" alt="user rating"></img>
                                     <span>{movieReviews.rating.toFixed(1)}</span>
                                 </div>
                             </div>

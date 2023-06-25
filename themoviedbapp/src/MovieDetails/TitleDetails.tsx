@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TitleOverview from "./Movie/MovieOverview";
 import OtherTitleDetails from "./Movie/OtherMovieDetails";
 import LandingPageSuspense from "../LandingPage/LandingPageSuspense";
@@ -28,24 +28,24 @@ export interface MovieDetails {
     original_language: string
 }
 
-export interface TVDetails{
+export interface TVDetails {
     original_name: string,
     original_language: string,
     created_by: string,
     poster_path: string,
     backdrop_path: string,
     first_air_date: string,
-    homepage:string,
+    homepage: string,
     in_production: boolean,
     network_logo: string,
     network_name: string,
-    number_of_episodes: number, 
-    number_of_seasons: number, 
+    number_of_episodes: number,
+    number_of_seasons: number,
     tagline: string,
     genres: Array<string>,
     vote_average: number,
-    overview: string, 
-    status: string, 
+    overview: string,
+    status: string,
     type: string,
     seasons: Array<Object>
 }
@@ -83,13 +83,15 @@ export interface StreamingProvider {
 
 function TitleDetails({ titleID, videoPlayerStatus }: Props) {
     const { mediaType }: TitleTypeProp = useContext(ThemeContext);
-    if(mediaType==="movie"){
-        return(
-            <MovieDetailsBody movieID={titleID}/>
+    if (mediaType === "movie") {
+        return (
+            <MovieDetailsBody movieID = { titleID } />
         )
     }
-    else return(
-        <TVShowDetailsBody tvShowID={titleID}/>
-    )
+    else{
+        return (
+            <TVShowDetailsBody tvShowID={titleID} />
+        )
+    } 
 }
 export default TitleDetails;

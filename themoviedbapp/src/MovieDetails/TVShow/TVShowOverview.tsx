@@ -63,7 +63,7 @@ function TVShowOverview({ titleInfo, titleID, releaseDateAndCertification, provi
         const hiddenBlurredDiv: HTMLElement | null = document.querySelector('.hiddenBlurredDiv');
         hiddenBlurredDiv?.classList.toggle('isBlurActive');
     }
-
+    
     return (
         <div className="titleWrapper">
             <div className="background" style={titleWrapperBkgImage}></div>
@@ -100,7 +100,11 @@ function TVShowOverview({ titleInfo, titleID, releaseDateAndCertification, provi
                         <span className="yearOfRelease">({titleInfo.first_air_date})</span>
                     </div>
                     <div className="genreAndRunTime">
-                        <span className="contentRating">{releaseDateAndCertification?.content_rating}</span>
+                        {
+                            releaseDateAndCertification?.content_rating === undefined ?
+                                <span className="contentRating">PG-13</span> :
+                                <span className="contentRating">{releaseDateAndCertification?.content_rating}</span>
+                        }
                         <span className="titleReleaseDate">{releaseDateAndCertification?.country_release_date}</span>
                         <span className="countryOfRelease">&nbsp;{releaseDateAndCertification?.country}</span>
                         <div className="genreDotOuter"><div className="dotInner"></div></div>
@@ -113,8 +117,6 @@ function TVShowOverview({ titleInfo, titleID, releaseDateAndCertification, provi
                                 })
                             }
                         </div>
-                        <div className="genreDotOuter"><div className="dotInner"></div></div>
-                        {/* <span className="runtime">{titleInfo.runtime}</span> */}
                     </div>
                     <div className="userscoreAndOtherOptions">
                         <div className="userScoreTitlePage">

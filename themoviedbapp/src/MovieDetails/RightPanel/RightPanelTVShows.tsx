@@ -38,7 +38,7 @@ function RightPanelTVShows({titleInfo, titleID, providers }: Props) {
                         </div>
                         <div className="network">
                             <span><b>Network</b></span>
-                            <img src={titleInfo.network_logo} className="networkLogo"></img>
+                            <img src={titleInfo.network_logo} className="networkLogo" alt="network provider"></img>
                         </div>
                         <div className="type">
                             <span><b>Type</b></span>

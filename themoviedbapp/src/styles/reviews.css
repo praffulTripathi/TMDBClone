@@ -59,6 +59,17 @@
     margin-right: 2px;
 }
 
+.noAuthor{
+    background-color: red;
+    opacity: 0.9;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    color: white;
+    font-size: 32px;
+}
+
+
 .reviewDateTime {
     font-size: 14.4px;
     font-weight: 300;
