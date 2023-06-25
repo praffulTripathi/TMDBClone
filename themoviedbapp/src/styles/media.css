@@ -36,6 +36,13 @@
     white-space: nowrap;
 }
 
+.popularMedia,
+.titleVideos,
+.titlePosters,
+.titleBackdrops{
+    animation: opacity-transition-animation 1s;
+}
+
 .video {
     width: 533px;
     height: 300px;

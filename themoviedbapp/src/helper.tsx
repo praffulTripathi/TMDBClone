@@ -1,6 +1,9 @@
 export function getKeyValue(object: any, key: string): any {
+    if(object===undefined)
+        return undefined;
     if (object.hasOwnProperty(key))
         return object[key];
+    else return undefined;
 }
 export const options: object = {
     method: 'GET',

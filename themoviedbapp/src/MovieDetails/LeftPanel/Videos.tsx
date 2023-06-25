@@ -8,13 +8,13 @@ interface Props {
 }
 function Videos({ videos, videoPlayerStatus }: Props) {
     const updateText: HTMLElement | null = document.querySelector(`.updateViewAllText`);
+    if (updateText)
+        updateText.innerHTML = "View All Videos";
     const openVideoInModal: Function = (streaming_path: string) => {
         console.log(streaming_path);
         const videoPlayer: HTMLElement | null = document.querySelector(`.videoPlayer`);
         videoPlayer?.classList.toggle('isActive');
     }
-    if (updateText)
-        updateText.innerHTML = "View All Videos";
     return (
         <div className="titleVideos scrollbar">
             {

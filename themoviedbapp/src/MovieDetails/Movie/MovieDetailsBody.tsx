@@ -145,9 +145,12 @@ function MovieDetailsBody({ movieID }: Props) {
                 indiaReleaseDate = release_dates_in?.find((releaseDate) => getKeyValue(releaseDate, "release_date") !== "" && getKeyValue(releaseDate, "type") === 3)
                 usReleaseDate = release_dates_us?.find((releaseDate) => getKeyValue(releaseDate, "release_date") !== "" && getKeyValue(releaseDate, "type") === 3)
 
-                const content_rating = indiaCertification !== undefined ? getKeyValue(indiaCertification, "certification") : getKeyValue(usCertification, "certification");
-
+                let content_rating = indiaCertification !== undefined ? getKeyValue(indiaCertification, "certification") : getKeyValue(usCertification, "certification");
                 countryReleaseDate = indiaReleaseDate === undefined ? getKeyValue(usReleaseDate, "release_date") : getKeyValue(indiaReleaseDate, "release_date");
+                if(countryReleaseDate===undefined){
+                    countryReleaseDate = getKeyValue(getKeyValue(results[0],"release_dates")[0],"release_date");
+                    content_rating = getKeyValue(getKeyValue(results[0],"release_dates")[0],"certification");
+                }
                 const dateString: string = countryReleaseDate.split('T')[0];
                 const dateObject = new Date(dateString);
                 const formattedReleaseDate = new Intl.DateTimeFormat('en-US', {
